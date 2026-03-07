@@ -5,7 +5,9 @@
 			<span class="text-sm font-bold leading-none" :class="getTextColor(props.plotData.median)">
 				{{ props.plotData.median }}
 			</span>
-			<span class="text-[9px] text-gray-500 uppercase font-medium tracking-wider"> Median </span>
+			<span class="text-[9px] text-gray-500 uppercase font-medium tracking-wider">
+				{{ props.textlabel }}
+			</span>
 		</div>
 
 		<!-- Vertical Divider -->
@@ -19,9 +21,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-
 const props = defineProps({
+	textlabel: { type: String, default: 'Median' },
 	plotData: {
 		type: Object,
 		default: () => ({
