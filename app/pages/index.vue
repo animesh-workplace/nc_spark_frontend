@@ -83,11 +83,7 @@
 		</div>
 
 		<div class="my-5" v-if="tableData?.results?.length || false">
-			<GenericTable :tableData="tableData" :tableParams="tableParams" />
-		</div>
-
-		<div class="my-5">
-			<VariantTable />
+			<VariantTable :data="tableData" :loading="isLoading" @sort="handleTableSort" @page="handleTablePage" />
 		</div>
 	</div>
 </template>
@@ -99,11 +95,8 @@ import { useGeneAPI } from '@/api/GeneAPI'
 const error = ref(null)
 const fileName = ref('')
 const parseTime = ref(0)
-const tableData = ref({})
 const parsedData = ref([])
-const session_id = ref('')
 const tableParams = ref({})
-const isLoading = ref(false)
 const isDragging = ref(false)
 const uploadTime = ref(0) // Add upload time ref
 const isUploading = ref(false) // Add upload loading state
@@ -222,20 +215,40 @@ const UploadData = async () => {
 	}
 }
 
-const FetchData = async () => {
+const tableData = ref({ results: [], total_results: 0 })
+const isLoading = ref(false)
+const session_id = ref('your-session-id')
+const currentPage = ref(1)
+const pageSize = ref(20)
+
+const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
+	isLoading.value = true
 	try {
 		const response = await FilterAPI({
-			page: 1,
-			page_size: 20,
-			session_id: session_id.value,
+			page,
+			page_size,
+			sort_order: 'asc',
+			// session_id: session_id.value,
+			session_id: '3742edba-3c35-4851-b9be-d5468210c757',
+			...sortParams,
 		})
 		tableData.value = response
-		tableParams.value = {
-			session_id: session_id.value,
-		}
 	} catch (error) {
-		console.error('Error fetching search suggestions:', error)
+		console.error('Error fetching data:', error)
+	} finally {
+		isLoading.value = false
 	}
+}
+
+const handleTableSort = (event) => {
+	// Optional: refetch with server-side sort instead of relying on client sort
+	// FetchData(currentPage.value, pageSize.value, { sort_field: event.sortField, sort_order: event.sortOrder })
+}
+
+const handleTablePage = (event) => {
+	currentPage.value = event.page + 1 // PrimeVue is 0-indexed
+	pageSize.value = event.rows
+	FetchData(currentPage.value, pageSize.value)
 }
 
 watch(isLoading, (val) => {
@@ -244,7 +257,7 @@ watch(isLoading, (val) => {
 
 onMounted(() => {
 	nextTick(async () => {
-		// FetchData()
+		FetchData()
 	})
 })
 </script>
