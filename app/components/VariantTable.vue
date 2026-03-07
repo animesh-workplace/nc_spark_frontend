@@ -1,5 +1,17 @@
 <template>
 	<div>
+		<!-- Stat Mode Selector -->
+		<div class="flex items-center gap-3 mb-3">
+			<span class="text-sm font-medium text-surface-600">Score Summary:</span>
+			<SelectButton
+				v-model="statMode"
+				:options="statOptions"
+				option-label="label"
+				option-value="value"
+				:allow-empty="false"
+			/>
+		</div>
+
 		<DataTable
 			lazy
 			rowHover
@@ -11,11 +23,12 @@
 			showGridlines
 			removableSort
 			:rows="noOfRows"
-			@sort="HandleSort"
-			:loading="isLoading"
-			:value="searchData.results"
-			:totalRecords="searchData.total_results"
+			:loading="loading"
+			:value="localResults"
+			:totalRecords="data.total_results"
 			:rowsPerPageOptions="[20, 50, 100, 200, 500]"
+			@sort="handleSort"
+			@page="handlePage"
 		>
 			<Column
 				sortable
@@ -24,19 +37,18 @@
 				:header="col.header"
 				:frozen="col.frozen"
 				v-for="col of columns"
-				:pt="{
-					columnHeaderContent: '!justify-center',
-				}"
+				:pt="{ columnHeaderContent: '!justify-center' }"
 			>
 				<template #body="slotProps">
 					<template v-if="col.field === 'pathogenicity'">
 						<ClientOnly fallback-tag="span" fallback="Loading scores...">
 							<ScoreTicker
+								:textlabel="statMode"
 								chartType="pathogenicity"
 								:plotData="{
 									data: slotProps.data.pathogenicity,
 									categories: score_groups.Pathogenicity,
-									median: slotProps.data.pathogenicity_median,
+									median: slotProps.data[`pathogenicity_${statMode}`],
 								}"
 							/>
 						</ClientOnly>
@@ -45,11 +57,12 @@
 					<template v-else-if="col.field === 'conservation'">
 						<ClientOnly fallback-tag="span" fallback="Loading scores...">
 							<ScoreTicker
+								:textlabel="statMode"
 								chartType="conservation"
 								:plotData="{
 									data: slotProps.data.conservation,
 									categories: score_groups.Conservation,
-									median: slotProps.data.conservation_median,
+									median: slotProps.data[`conservation_${statMode}`],
 								}"
 							/>
 						</ClientOnly>
@@ -58,11 +71,12 @@
 					<template v-else-if="col.field === 'regulatory'">
 						<ClientOnly fallback-tag="span" fallback="Loading scores...">
 							<ScoreTicker
+								:textlabel="statMode"
 								chartType="regulatory"
 								:plotData="{
 									data: slotProps.data.regulatory,
 									categories: score_groups.Regulatory,
-									median: slotProps.data.regulatory_median,
+									median: slotProps.data[`regulatory_${statMode}`],
 								}"
 							/>
 						</ClientOnly>
@@ -71,11 +85,12 @@
 					<template v-else-if="col.field === 'replication_timing'">
 						<ClientOnly fallback-tag="span" fallback="Loading scores...">
 							<ScoreTicker
+								:textlabel="statMode"
 								chartType="replication_timing"
 								:plotData="{
 									data: slotProps.data.replication_timing,
 									categories: score_groups['Replication Timing'],
-									median: slotProps.data.replication_timing_median,
+									median: slotProps.data[`replication_timing_${statMode}`],
 								}"
 							/>
 						</ClientOnly>
@@ -91,54 +106,56 @@
 </template>
 
 <script setup>
+const props = defineProps({
+	data: {
+		type: Object,
+		default: () => ({ results: [], total_results: 0 }),
+	},
+	loading: {
+		type: Boolean,
+		default: false,
+	},
+})
+
+const emit = defineEmits(['sort', 'page'])
+
 const noOfRows = ref(20)
-const search_results = Array.from({ length: 30 }).map((_, i) => ({
-	chr: `chr${Math.floor(Math.random() * 22) + 1}`,
-	pos: Math.floor(Math.random() * 10000),
-	ref: 'A',
-	alt: 'T',
-	pathogenicity_median: 0,
-	conservation_median: 0,
-	regulatory_median: 0,
-	replication_timing_median: 0,
-	pathogenicity: Array.from({ length: 12 }).map((_, j) => [j, 0, Number(Math.random().toFixed(2))]),
-	conservation: Array.from({ length: 4 }).map((_, j) => [j, 0, Number(Math.random().toFixed(2))]),
-	regulatory: Array.from({ length: 4 }).map((_, j) => [j, 0, Number(Math.random().toFixed(2))]),
-	replication_timing: Array.from({ length: 6 }).map((_, j) => [j, 0, Number(Math.random().toFixed(2))]),
-}))
 
-const searchData = ref({
-	results: search_results,
-	total_results: 300,
-})
+// Stat mode selector state
+const statMode = ref('median')
+const statOptions = [
+	{ label: 'Median', value: 'median' },
+	{ label: 'Mean', value: 'mean' },
+	{ label: 'Min', value: 'min' },
+	{ label: 'Max', value: 'max' },
+]
 
-// Calculate the median scores for each variant
-searchData.value.results.forEach((element) => {
-	element.pathogenicity_median = parseFloat(
-		element.pathogenicity
-			.map((score) => score[2])
-			.sort((a, b) => a - b)
-			[Math.floor(element.pathogenicity.length / 2)].toFixed(2),
-	)
-	element.conservation_median = parseFloat(
-		element.conservation
-			.map((score) => score[2])
-			.sort((a, b) => a - b)
-			[Math.floor(element.conservation.length / 2)].toFixed(2),
-	)
-	element.regulatory_median = parseFloat(
-		element.regulatory
-			.map((score) => score[2])
-			.sort((a, b) => a - b)
-			[Math.floor(element.regulatory.length / 2)].toFixed(2),
-	)
-	element.replication_timing_median = parseFloat(
-		element.replication_timing
-			.map((score) => score[2])
-			.sort((a, b) => a - b)
-			[Math.floor(element.replication_timing.length / 2)].toFixed(2),
-	)
-})
+const scoreFieldMap = {
+	pathogenicity: [
+		'CADD',
+		'CSCAPE_NONCODING',
+		'DANN',
+		'FATHMM_MKL_NONCODING',
+		'FATHMM_XF_NONCODING',
+		'GPN',
+		'GWRVIS',
+		'JARVIS',
+		'LINSIGHT',
+		'NCER',
+		'ORION',
+		'REMM',
+	],
+	conservation: ['GERP', 'PhyloP_100way', 'PhyloP_30way', 'MACIE_CONSERVED'],
+	regulatory: ['FUNSEQ2', 'FIRE', 'REGULOMEDB', 'MACIE_REGULATORY'],
+	replication_timing: [
+		'REPLISEQ_S1',
+		'REPLISEQ_S2',
+		'REPLISEQ_S3',
+		'REPLISEQ_S4',
+		'REPLISEQ_G1B',
+		'REPLISEQ_G2',
+	],
+}
 
 const score_groups = {
 	Pathogenicity: [
@@ -155,12 +172,10 @@ const score_groups = {
 		'ORION',
 		'ReMM',
 	],
-	Regulatory: ['FunSeq2', 'FIRE', 'REGDB', 'MACIER'],
 	Conservation: ['GERP', 'PhyP100', 'PhyP30', 'MACIEC'],
+	Regulatory: ['FunSeq2', 'FIRE', 'REGDB', 'MACIER'],
 	'Replication Timing': ['RepS1', 'RepS2', 'RepS3', 'RepS4', 'RepG1b', 'RepG2'],
 }
-
-const isLoading = ref(false)
 
 const columns = [
 	{ field: 'chr', header: 'Chrom', frozen: false },
@@ -173,25 +188,37 @@ const columns = [
 	{ field: 'replication_timing', header: 'Replication Timing', frozen: false },
 ]
 
-const HandleSort = async (event) => {
-	if (event.sortField === 'pathogenicity') {
-		searchData.value.results.sort((a, b) => {
-			return event.sortOrder * (a.pathogenicity_median - b.pathogenicity_median)
-		})
-	} else if (event.sortField === 'conservation') {
-		searchData.value.results.sort((a, b) => {
-			return event.sortOrder * (a.conservation_median - b.conservation_median)
-		})
-	} else if (event.sortField === 'regulatory') {
-		searchData.value.results.sort((a, b) => {
-			return event.sortOrder * (a.regulatory_median - b.regulatory_median)
-		})
-	} else if (event.sortField === 'replication_timing') {
-		searchData.value.results.sort((a, b) => {
-			return event.sortOrder * (a.replication_timing_median - b.replication_timing_median)
-		})
+const transformRow = (row) => ({
+	...row, // preserves all _mean, _median, _min, _max fields from API
+	pathogenicity: scoreFieldMap.pathogenicity.map((field, i) => [i, 0, row[field] ?? 0]),
+	conservation: scoreFieldMap.conservation.map((field, i) => [i, 0, row[field] ?? 0]),
+	regulatory: scoreFieldMap.regulatory.map((field, i) => [i, 0, row[field] ?? 0]),
+	replication_timing: scoreFieldMap.replication_timing.map((field, i) => [i, 0, row[field] ?? 0]),
+})
+
+const localResults = ref([])
+
+watch(
+	() => props.data.results,
+	(rows) => {
+		localResults.value = (rows ?? []).map(transformRow)
+	},
+	{ immediate: true },
+)
+
+// Sort key follows the selected statMode dynamically
+const handleSort = (event) => {
+	emit('sort', event)
+
+	const statKey = `${event.sortField}_${statMode.value}`
+	const isScoreCol = Object.keys(scoreFieldMap).includes(event.sortField)
+
+	if (isScoreCol) {
+		localResults.value.sort((a, b) => event.sortOrder * ((a[statKey] ?? 0) - (b[statKey] ?? 0)))
 	}
 }
-</script>
 
-<style></style>
+const handlePage = (event) => {
+	emit('page', event)
+}
+</script>
