@@ -82,6 +82,11 @@
 			<p v-if="session_id" class="text-xs text-green-600 mt-1">Session ID: {{ session_id }}</p>
 		</div>
 
+		<div class="my-5">
+			<!-- Single score histogram with optional marker -->
+			<ScoreHistogram :histogramData="histogramData" />
+		</div>
+
 		<div class="my-5" v-if="tableData?.results?.length || false">
 			<VariantTable :data="tableData" :loading="isLoading" @sort="handleTableSort" @page="handleTablePage" />
 		</div>
@@ -100,7 +105,7 @@ const tableParams = ref({})
 const isDragging = ref(false)
 const uploadTime = ref(0) // Add upload time ref
 const isUploading = ref(false) // Add upload loading state
-const { UploadAPI, FilterAPI } = useGeneAPI()
+const { UploadAPI, FilterAPI, DistributionAPI } = useGeneAPI()
 
 function handleFileSelect(event) {
 	const file = event.target.files[0]
@@ -220,6 +225,7 @@ const isLoading = ref(false)
 const session_id = ref('your-session-id')
 const currentPage = ref(1)
 const pageSize = ref(20)
+const histogramData = ref([])
 
 const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 	isLoading.value = true
@@ -229,10 +235,21 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 			page_size,
 			sort_order: 'asc',
 			// session_id: session_id.value,
-			session_id: '3742edba-3c35-4851-b9be-d5468210c757',
+			session_id: '75aa79be-7ff5-4433-96f2-4b9338ca8f95',
 			...sortParams,
 		})
 		tableData.value = response
+	} catch (error) {
+		console.error('Error fetching data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+
+const FetchData2 = async () => {
+	try {
+		const response = await DistributionAPI('75aa79be-7ff5-4433-96f2-4b9338ca8f95')
+		histogramData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
 	} finally {
@@ -257,7 +274,8 @@ watch(isLoading, (val) => {
 
 onMounted(() => {
 	nextTick(async () => {
-		FetchData()
+		await FetchData()
+		await FetchData2()
 	})
 })
 </script>
