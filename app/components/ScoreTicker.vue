@@ -46,20 +46,6 @@ const props = defineProps({
 	chartType: { type: String },
 })
 
-// Calculate Median from your plotData structure ([index, y, value])
-// const medianValue = computed(() => {
-// 	if (!props.plotData || !props.plotData.data) return 0
-
-// 	// Extract just the values (3rd element in the array)
-// 	const values = props.plotData.data.map((item) => item[2])
-// 	if (values.length === 0) return 0
-
-// 	values.sort((a, b) => a - b)
-// 	const mid = Math.floor(values.length / 2)
-
-// 	return values.length % 2 !== 0 ? values[mid] : (values[mid - 1] + values[mid]) / 2
-// })
-
 // Color Logic for Text
 const getTextColor = (val) => {
 	if (val >= 0.7) return 'text-red-400' // High/Pathogenic
