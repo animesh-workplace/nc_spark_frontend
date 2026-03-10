@@ -39,8 +39,26 @@ export function useGeneAPI() {
 		}
 	}
 
+	const DistributionAPI = async (payload) => {
+		try {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/distributions`, {
+				method: 'GET',
+			})
+
+			if (error.value) {
+				throw new Error(error.value || 'An error occurred')
+			}
+
+			return data.value
+		} catch (err) {
+			console.error(err)
+			throw err
+		}
+	}
+
 	return {
 		UploadAPI,
 		FilterAPI,
+		DistributionAPI,
 	}
 }
