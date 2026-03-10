@@ -20,20 +20,39 @@ const nvTheme = definePreset(Aura, {
 	},
 })
 
+const higlassPlugins = [
+	'higlass-vcf',
+	'higlass-pileup',
+	'higlass-gnomad',
+	'higlass-dynseq',
+	'higlass-clinvar',
+	'higlass-register',
+	'higlass-sequence',
+	'higlass-multivec',
+	'higlass-orthologs',
+	'higlass-transcripts',
+	'higlass-bigwig-datafetcher',
+]
+
 export default defineNuxtConfig({
 	devServer: { port: 3012 },
 	compatibilityDate: '2025-07-15',
 	devtools: { enabled: false },
 	vite: {
-		optimizeDeps: { include: ['react', 'react-dom', 'higlass', 'echarts', 'echarts-gl', 'zrender'] },
-		ssr: { noExternal: ['react', 'react-dom', 'higlass', 'echarts', 'echarts-gl', 'zrender'] },
+		optimizeDeps: {
+			include: ['react', 'react-dom', 'higlass', 'echarts', 'echarts-gl', 'zrender', ...higlassPlugins],
+		},
+		ssr: {
+			noExternal: ['react', 'react-dom', 'higlass', 'echarts', 'echarts-gl', 'zrender', ...higlassPlugins],
+		},
 		plugins: [tailwindcss()],
 	},
 	css: ['./app/assets/css/main.css'],
 	app: {
 		baseURL: '/nvpp/',
 		head: {
-			title: 'Noncoding Variant Prioritization Portal | National Institute of Biomedical Genomics | BRIC-NIBMG',
+			title:
+				'Noncoding Variant Prioritization Portal | National Institute of Biomedical Genomics | BRIC-NIBMG',
 			meta: [],
 			link: [],
 		},
@@ -58,7 +77,7 @@ export default defineNuxtConfig({
 	echarts: {
 		renderer: ['canvas'],
 		features: ['UniversalTransition'],
-		charts: ['BarChart', 'PieChart', 'CustomChart', 'ScatterChart', 'HeatmapChart'],
+		charts: ['BarChart', 'PieChart', 'CustomChart', 'ScatterChart', 'HeatmapChart', 'LineChart'],
 		components: [
 			'GridComponent',
 			'TitleComponent',
@@ -68,6 +87,8 @@ export default defineNuxtConfig({
 			'TooltipComponent',
 			'ToolboxComponent',
 			'VisualMapComponent',
+			'DataZoomComponent',
+			'MarkLineComponent',
 		],
 	},
 })
