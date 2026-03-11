@@ -5,10 +5,10 @@
 			<span class="text-sm font-medium text-surface-600">Score Summary:</span>
 			<SelectButton
 				v-model="statMode"
-				:options="statOptions"
 				option-label="label"
 				option-value="value"
 				:allow-empty="false"
+				:options="statOptions"
 			/>
 		</div>
 
@@ -24,11 +24,11 @@
 			removableSort
 			:rows="noOfRows"
 			:loading="loading"
+			@sort="handleSort"
+			@page="handlePage"
 			:value="localResults"
 			:totalRecords="data.total_results"
 			:rowsPerPageOptions="[20, 50, 100, 200, 500]"
-			@sort="handleSort"
-			@page="handlePage"
 		>
 			<Column
 				sortable
@@ -107,13 +107,10 @@
 
 <script setup>
 const props = defineProps({
+	loading: { type: Boolean, default: false },
 	data: {
 		type: Object,
 		default: () => ({ results: [], total_results: 0 }),
-	},
-	loading: {
-		type: Boolean,
-		default: false,
 	},
 })
 
@@ -188,26 +185,26 @@ const columns = [
 	{ field: 'replication_timing', header: 'Replication Timing', frozen: false },
 ]
 
-const transformRow = (row) => ({
+const transformRow = row => ({
 	...row, // preserves all _mean, _median, _min, _max fields from API
-	pathogenicity: scoreFieldMap.pathogenicity.map((field, i) => [i, 0, row[field] ?? 0]),
-	conservation: scoreFieldMap.conservation.map((field, i) => [i, 0, row[field] ?? 0]),
-	regulatory: scoreFieldMap.regulatory.map((field, i) => [i, 0, row[field] ?? 0]),
-	replication_timing: scoreFieldMap.replication_timing.map((field, i) => [i, 0, row[field] ?? 0]),
+	regulatory: scoreFieldMap.regulatory.map((field, i) => [i, 0, row[field]]),
+	conservation: scoreFieldMap.conservation.map((field, i) => [i, 0, row[field]]),
+	pathogenicity: scoreFieldMap.pathogenicity.map((field, i) => [i, 0, row[field]]),
+	replication_timing: scoreFieldMap.replication_timing.map((field, i) => [i, 0, row[field]]),
 })
 
 const localResults = ref([])
 
 watch(
 	() => props.data.results,
-	(rows) => {
+	rows => {
 		localResults.value = (rows ?? []).map(transformRow)
 	},
 	{ immediate: true },
 )
 
 // Sort key follows the selected statMode dynamically
-const handleSort = (event) => {
+const handleSort = event => {
 	emit('sort', event)
 
 	const statKey = `${event.sortField}_${statMode.value}`
@@ -218,7 +215,7 @@ const handleSort = (event) => {
 	}
 }
 
-const handlePage = (event) => {
+const handlePage = event => {
 	emit('page', event)
 }
 </script>
