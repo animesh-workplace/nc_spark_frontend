@@ -22,6 +22,7 @@
         "higlass-text": "^0.1.7",
         "higlass-transcripts": "^0.3.8",
         "higlass-vcf": "^0.1.7",
+        "igv": "^3.7.3",
         "nuxt": "^4.2.1",
         "nuxt-echarts": "^1.0.1",
         "papaparse": "^5.5.3",
@@ -1133,6 +1134,8 @@
     "ieee754": ["ieee754@1.2.1", "", {}, "sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA=="],
 
     "ignore": ["ignore@7.0.5", "", {}, "sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg=="],
+
+    "igv": ["igv@3.7.3", "", {}, "sha512-CkK9s1eiMjpxyF9dwiyJ1IrO7HdTHbdEkFfVycdpsAfMDWSkurvdr75paVgdNb0kZEtcICHfi0ayPTofvJuPXQ=="],
 
     "image-meta": ["image-meta@0.2.2", "", {}, "sha512-3MOLanc3sb3LNGWQl1RlQlNWURE5g32aUphrDyFeCsxBTk08iE3VNe4CwsUZ0Qs1X+EfX0+r29Sxdpza4B+yRA=="],
 
