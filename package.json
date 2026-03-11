@@ -27,6 +27,7 @@
     "higlass-text": "^0.1.7",
     "higlass-transcripts": "^0.3.8",
     "higlass-vcf": "^0.1.7",
+    "igv": "^3.7.3",
     "nuxt": "^4.2.1",
     "nuxt-echarts": "^1.0.1",
     "papaparse": "^5.5.3",
