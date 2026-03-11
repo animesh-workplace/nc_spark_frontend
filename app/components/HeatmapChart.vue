@@ -22,6 +22,8 @@ const props = defineProps({
 	horizontal: { type: Boolean, default: false },
 })
 
+const NULL_SENTINEL = -1 // ⭐ sentinel value to represent null
+
 const chartOption = ref({
 	grid: {
 		top: '0%',
@@ -30,9 +32,7 @@ const chartOption = ref({
 		bottom: '0%',
 	},
 	xAxis: {
-		// position: 'top',
 		type: 'category',
-		// show: props.showLabel,
 		axisLine: { show: false },
 		data: props.plotData.categories,
 		axisLabel: {
@@ -48,27 +48,24 @@ const chartOption = ref({
 		show: false,
 	},
 
-	// ⭐ Gradient from low → high
+	// Piecewise visualMap: sentinel -1 → black, 0–1 → gradient
 	visualMap: {
-		min: 0,
-		max: 1,
+		type: 'piecewise',
 		show: false,
-		calculable: false,
-		inRange: {
-			color: [
-				'#313695',
-				'#4575b4',
-				'#74add1',
-				'#abd9e9',
-				'#e0f3f8',
-				'#ffffbf',
-				'#fee090',
-				'#fdae61',
-				'#f46d43',
-				'#d73027',
-				'#a50026',
-			],
-		},
+		pieces: [
+			{ min: -1, max: -0.5, color: '#1a1a1a', opacity: 0.5 },
+			{ min: 0, max: 0.1, color: '#313695', opacity: 1 },
+			{ min: 0.1, max: 0.2, color: '#4575b4', opacity: 1 },
+			{ min: 0.2, max: 0.3, color: '#74add1', opacity: 1 },
+			{ min: 0.3, max: 0.4, color: '#abd9e9', opacity: 1 },
+			{ min: 0.4, max: 0.5, color: '#e0f3f8', opacity: 1 },
+			{ min: 0.5, max: 0.6, color: '#ffffbf', opacity: 1 },
+			{ min: 0.6, max: 0.7, color: '#fee090', opacity: 1 },
+			{ min: 0.7, max: 0.8, color: '#fdae61', opacity: 1 },
+			{ min: 0.8, max: 0.9, color: '#f46d43', opacity: 1 },
+			{ min: 0.9, max: 0.98, color: '#d73027', opacity: 1 },
+			{ min: 0.99, max: 1.0, color: '#a50026', opacity: 1 },
+		],
 	},
 
 	series: [
@@ -80,7 +77,7 @@ const chartOption = ref({
 				opacity: 0.4,
 				fontWeight: 400,
 				fontFamily: 'Lexend Deca',
-				formatter: (p) => p.data[2],
+				formatter: p => (p.data.rawValue === null ? 'NA' : p.data.value[2]),
 			},
 			itemStyle: {
 				borderWidth: 0,
@@ -96,17 +93,17 @@ const updateChart = () => {
 
 	chartOption.value.xAxis.data = categories
 	chartOption.value.series[0].data = data.map(([x, y, value], index) => {
+		let radius = 0
 		const isFirst = index === 0
+		const isNull = value === null
 		const isLast = index === data.length - 1
 
-		let radius = 0
-
-		if (isFirst) radius = [5, 0, 0, 5] // left rounded
-		else if (isLast) radius = [0, 5, 5, 0] // right rounded
-		else radius = 0 // middle cells square
+		if (isFirst) radius = [5, 0, 0, 5]
+		else if (isLast) radius = [0, 5, 5, 0]
 
 		return {
-			value: [x, y, value],
+			value: [x, y, isNull ? NULL_SENTINEL : value],
+			rawValue: value,
 			itemStyle: {
 				borderRadius: radius,
 			},
