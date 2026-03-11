@@ -236,7 +236,7 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 			page_size,
 			sort_order: 'asc',
 			// session_id: session_id.value,
-			session_id: '9469a53b-8f40-435e-a19c-a670bd5f3ba0',
+			session_id: 'f947c4d5-b009-44b7-ada1-38ee920832fc',
 			...sortParams,
 		})
 		tableData.value = response
@@ -249,7 +249,7 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 
 const FetchData2 = async () => {
 	try {
-		const response = await DistributionAPI('9469a53b-8f40-435e-a19c-a670bd5f3ba0')
+		const response = await DistributionAPI('f947c4d5-b009-44b7-ada1-38ee920832fc')
 		histogramData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
