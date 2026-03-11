@@ -3,3 +3,13 @@
 @theme {
 	--font-sans: 'DM Sans', sans-serif;
 }
+
+/* Remove IGV logo */
+.igv-logo {
+	display: none !important;
+}
+
+/* Also hide the logo container if present */
+:deep(.igv-logo-container) {
+	display: none !important;
+}
