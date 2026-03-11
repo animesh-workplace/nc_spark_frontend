@@ -77,7 +77,7 @@ export default defineNuxtConfig({
 	echarts: {
 		renderer: ['canvas'],
 		features: ['UniversalTransition'],
-		charts: ['BarChart', 'PieChart', 'CustomChart', 'ScatterChart', 'HeatmapChart', 'LineChart'],
+		charts: ['BarChart', 'PieChart', 'CustomChart', 'ScatterChart', 'HeatmapChart', 'LineChart', 'RadarChart'],
 		components: [
 			'GridComponent',
 			'TitleComponent',
