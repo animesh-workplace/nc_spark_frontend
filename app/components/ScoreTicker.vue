@@ -3,7 +3,7 @@
 		<!-- 1. The Median (Stock Ticker Style) -->
 		<div class="flex flex-col items-center justify-center mr-2 shrink-0 pt-2">
 			<span class="text-sm font-bold leading-none" :class="getTextColor(props.plotData.median)">
-				{{ props.plotData.median }}
+				{{ props.plotData.median || 'NA' }}
 			</span>
 			<span class="text-[9px] text-gray-500 uppercase font-medium tracking-wider">
 				{{ props.textlabel }}
@@ -47,7 +47,8 @@ const props = defineProps({
 })
 
 // Color Logic for Text
-const getTextColor = (val) => {
+const getTextColor = val => {
+	if (val === null) return 'text-gray-400' // NA/Null
 	if (val >= 0.7) return 'text-red-400' // High/Pathogenic
 	if (val >= 0.4) return 'text-yellow-400' // Medium
 	return 'text-blue-300' // Low/Benign
