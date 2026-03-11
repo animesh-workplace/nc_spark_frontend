@@ -85,6 +85,7 @@
 		<div class="my-5">
 			<!-- Single score histogram with optional marker -->
 			<ScoreHistogram :histogramData="histogramData" />
+			<ScoreLine :histogramData="histogramData" />
 		</div>
 
 		<div class="my-5" v-if="tableData?.results?.length || false">
@@ -146,10 +147,10 @@ function processFile(file) {
 		delimiter: '\t',
 		header: true,
 		skipEmptyLines: true,
-		transformHeader: (header) => header.toLowerCase().trim(),
+		transformHeader: header => header.toLowerCase().trim(),
 
 		// This is called when parsing is complete
-		complete: (results) => {
+		complete: results => {
 			// Calculate parse time
 			const endTime = performance.now()
 			parseTime.value = Math.round(endTime - startTime)
@@ -165,7 +166,7 @@ function processFile(file) {
 			const requiredCols = ['chromosome', 'start_position', 'reference_allele', 'tumor_seq_allele2']
 
 			// Map the data to our required structure
-			const finalData = results.data.map((row) => ({
+			const finalData = results.data.map(row => ({
 				pos: row.start_position,
 				ref: row.reference_allele,
 				alt: row.tumor_seq_allele2,
@@ -177,7 +178,7 @@ function processFile(file) {
 			console.log(`Parsed ${finalData.length} variants in ${parseTime.value}ms`)
 		},
 		// This is called if there's a critical file reading error
-		error: (err) => {
+		error: err => {
 			// Calculate parse time even on error
 			const endTime = performance.now()
 			parseTime.value = Math.round(endTime - startTime)
@@ -235,7 +236,7 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 			page_size,
 			sort_order: 'asc',
 			// session_id: session_id.value,
-			session_id: '75aa79be-7ff5-4433-96f2-4b9338ca8f95',
+			session_id: '9469a53b-8f40-435e-a19c-a670bd5f3ba0',
 			...sortParams,
 		})
 		tableData.value = response
@@ -248,7 +249,7 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 
 const FetchData2 = async () => {
 	try {
-		const response = await DistributionAPI('75aa79be-7ff5-4433-96f2-4b9338ca8f95')
+		const response = await DistributionAPI('9469a53b-8f40-435e-a19c-a670bd5f3ba0')
 		histogramData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
@@ -257,18 +258,18 @@ const FetchData2 = async () => {
 	}
 }
 
-const handleTableSort = (event) => {
+const handleTableSort = event => {
 	// Optional: refetch with server-side sort instead of relying on client sort
 	// FetchData(currentPage.value, pageSize.value, { sort_field: event.sortField, sort_order: event.sortOrder })
 }
 
-const handleTablePage = (event) => {
+const handleTablePage = event => {
 	currentPage.value = event.page + 1 // PrimeVue is 0-indexed
 	pageSize.value = event.rows
 	FetchData(currentPage.value, pageSize.value)
 }
 
-watch(isLoading, (val) => {
+watch(isLoading, val => {
 	console.log('isLoading changed to:', val)
 })
 
