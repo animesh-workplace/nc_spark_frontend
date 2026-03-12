@@ -83,9 +83,25 @@
 		</div>
 
 		<div class="my-5">
-			<!-- Single score histogram with optional marker -->
-			<ScoreHistogram :histogramData="histogramData" />
-			<ScoreLine :histogramData="histogramData" />
+			<!-- Switcher -->
+			<div class="flex justify-start mb-3">
+				<SelectButton
+					option-label="label"
+					option-value="value"
+					:allow-empty="false"
+					v-model="selectedView"
+					:options="viewOptions"
+				>
+					<template #option="{ option }">
+						<Icon :name="option.icon" class="w-5! h-5! text-gray-500 mr-2" />
+						{{ option.label }}
+					</template>
+				</SelectButton>
+			</div>
+
+			<!-- Conditional chart render -->
+			<ScoreHistogram v-if="selectedView === 'histogram'" :histogramData="histogramData" />
+			<ScoreLine v-else :histogramData="histogramData" />
 		</div>
 
 		<div class="my-5" v-if="tableData?.results?.length || false">
@@ -102,10 +118,15 @@ const error = ref(null)
 const fileName = ref('')
 const parseTime = ref(0)
 const parsedData = ref([])
-const tableParams = ref({})
 const isDragging = ref(false)
 const uploadTime = ref(0) // Add upload time ref
 const isUploading = ref(false) // Add upload loading state
+const viewOptions = ref([
+	{ label: 'Line', value: 'line', icon: 'solar:diagram-up-linear' },
+	{ label: 'Histogram', value: 'histogram', icon: 'solar:chart-line-duotone' },
+])
+
+const selectedView = ref('line') // default is line
 const { UploadAPI, FilterAPI, DistributionAPI } = useGeneAPI()
 
 function handleFileSelect(event) {
@@ -200,7 +221,7 @@ const UploadData = async () => {
 
 		// Start upload timing
 
-		const response = await UploadAPI(parsedData.value)
+		const response = await UploadAPI(parsedData.value, { genome: 'hg38' })
 
 		// Calculate upload time
 		const endTime = performance.now()
@@ -221,12 +242,12 @@ const UploadData = async () => {
 	}
 }
 
-const tableData = ref({ results: [], total_results: 0 })
-const isLoading = ref(false)
-const session_id = ref('your-session-id')
-const currentPage = ref(1)
 const pageSize = ref(20)
+const currentPage = ref(1)
+const isLoading = ref(false)
 const histogramData = ref([])
+const session_id = ref('your-session-id')
+const tableData = ref({ results: [], total_results: 0 })
 
 const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 	isLoading.value = true
@@ -236,7 +257,7 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 			page_size,
 			sort_order: 'asc',
 			// session_id: session_id.value,
-			session_id: 'f947c4d5-b009-44b7-ada1-38ee920832fc',
+			session_id: '86eef76e-15b5-403a-a1cc-0ee088f41a3e',
 			...sortParams,
 		})
 		tableData.value = response
@@ -249,7 +270,7 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 
 const FetchData2 = async () => {
 	try {
-		const response = await DistributionAPI('f947c4d5-b009-44b7-ada1-38ee920832fc')
+		const response = await DistributionAPI('86eef76e-15b5-403a-a1cc-0ee088f41a3e')
 		histogramData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
