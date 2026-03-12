@@ -104,6 +104,10 @@
 			<ScoreLine v-else :histogramData="histogramData" />
 		</div>
 
+		<div class="my-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+			<ReplicationRadarChart :plotData="replicationData" />
+			<BarChart :plotData="trinucleotideData" horizontal showAll />
+		</div>
 		<div class="my-5" v-if="tableData?.results?.length || false">
 			<VariantTable :data="tableData" :loading="isLoading" @sort="handleTableSort" @page="handleTablePage" />
 		</div>
@@ -127,7 +131,7 @@ const viewOptions = ref([
 ])
 
 const selectedView = ref('line') // default is line
-const { UploadAPI, FilterAPI, DistributionAPI } = useGeneAPI()
+const { UploadAPI, FilterAPI, DistributionAPI, ReplicationAPI, TrinucleotideAPI } = useGeneAPI()
 
 function handleFileSelect(event) {
 	const file = event.target.files[0]
@@ -246,8 +250,10 @@ const pageSize = ref(20)
 const currentPage = ref(1)
 const isLoading = ref(false)
 const histogramData = ref([])
-const session_id = ref('your-session-id')
+const session_id = ref('86eef76e-15b5-403a-a1cc-0ee088f41a3e')
 const tableData = ref({ results: [], total_results: 0 })
+const trinucleotideData = ref({ data: [], categories: [] })
+const replicationData = ref({ stats: [], indicator: [], series_data: [] })
 
 const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 	isLoading.value = true
@@ -256,8 +262,7 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 			page,
 			page_size,
 			sort_order: 'asc',
-			// session_id: session_id.value,
-			session_id: '86eef76e-15b5-403a-a1cc-0ee088f41a3e',
+			session_id: session_id.value,
 			...sortParams,
 		})
 		tableData.value = response
@@ -270,8 +275,29 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 
 const FetchData2 = async () => {
 	try {
-		const response = await DistributionAPI('86eef76e-15b5-403a-a1cc-0ee088f41a3e')
+		const response = await DistributionAPI(session_id.value)
 		histogramData.value = response
+	} catch (error) {
+		console.error('Error fetching data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+const FetchData3 = async () => {
+	try {
+		const response = await ReplicationAPI(session_id.value)
+		replicationData.value = response
+	} catch (error) {
+		console.error('Error fetching data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+
+const FetchData4 = async () => {
+	try {
+		const response = await TrinucleotideAPI(session_id.value)
+		trinucleotideData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
 	} finally {
@@ -298,6 +324,8 @@ onMounted(() => {
 	nextTick(async () => {
 		await FetchData()
 		await FetchData2()
+		await FetchData3()
+		await FetchData4()
 	})
 })
 </script>
