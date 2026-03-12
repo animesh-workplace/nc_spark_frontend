@@ -57,9 +57,45 @@ export function useGeneAPI() {
 		}
 	}
 
+	const ReplicationAPI = async payload => {
+		try {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/replication`, {
+				method: 'GET',
+			})
+
+			if (error.value) {
+				throw new Error(error.value || 'An error occurred')
+			}
+
+			return data.value
+		} catch (err) {
+			console.error(err)
+			throw err
+		}
+	}
+
+	const TrinucleotideAPI = async payload => {
+		try {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/trinucleotide?mode=count`, {
+				method: 'GET',
+			})
+
+			if (error.value) {
+				throw new Error(error.value || 'An error occurred')
+			}
+
+			return data.value
+		} catch (err) {
+			console.error(err)
+			throw err
+		}
+	}
+
 	return {
 		UploadAPI,
 		FilterAPI,
+		ReplicationAPI,
 		DistributionAPI,
+		TrinucleotideAPI,
 	}
 }
