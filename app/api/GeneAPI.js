@@ -3,11 +3,12 @@ export function useGeneAPI() {
 	// const BASEURL = `${config.public.API_BASE_URL}`
 	const BASEURL = 'http://10.10.6.80/nvpp/api/v1'
 
-	const UploadAPI = async (payload) => {
+	const UploadAPI = async (payload, params) => {
 		try {
 			const { data, error } = await useFetch(`${BASEURL}/upload_variants`, {
 				method: 'POST',
 				body: payload,
+				params: params,
 			})
 
 			if (error.value) {
@@ -21,7 +22,7 @@ export function useGeneAPI() {
 		}
 	}
 
-	const FilterAPI = async (payload) => {
+	const FilterAPI = async payload => {
 		try {
 			const { data, error } = await useFetch(`${BASEURL}/get_filtered_variants`, {
 				method: 'POST',
@@ -39,7 +40,7 @@ export function useGeneAPI() {
 		}
 	}
 
-	const DistributionAPI = async (payload) => {
+	const DistributionAPI = async payload => {
 		try {
 			const { data, error } = await useFetch(`${BASEURL}/${payload}/distributions`, {
 				method: 'GET',
