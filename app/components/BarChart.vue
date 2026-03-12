@@ -1,5 +1,5 @@
 <template>
-	<div class="w-full flex justify-center">
+	<div class="w-full flex">
 		<Skeleton height="24rem" v-if="isLoading" />
 		<VChart :option="chartOption" class="chart" autoresize v-else />
 	</div>
@@ -42,7 +42,7 @@ const chartOption = ref({
 		},
 	},
 	yAxis: {
-		show: false,
+		show: true,
 		axisTick: { show: true },
 		axisLine: { show: true },
 		minorTick: { show: true },
@@ -110,7 +110,7 @@ onMounted(() => {
 
 <style scoped>
 .chart {
-	width: 22rem;
-	height: 3.5rem;
+	width: 30rem;
+	height: 30rem;
 }
 </style>
