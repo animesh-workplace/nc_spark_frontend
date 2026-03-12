@@ -145,11 +145,11 @@ const scoreFieldMap = {
 	conservation: ['GERP', 'PhyloP_100way', 'PhyloP_30way', 'MACIE_CONSERVED'],
 	regulatory: ['FUNSEQ2', 'FIRE', 'REGULOMEDB', 'MACIE_REGULATORY'],
 	replication_timing: [
+		'REPLISEQ_G1B',
 		'REPLISEQ_S1',
 		'REPLISEQ_S2',
 		'REPLISEQ_S3',
 		'REPLISEQ_S4',
-		'REPLISEQ_G1B',
 		'REPLISEQ_G2',
 	],
 }
@@ -171,7 +171,7 @@ const score_groups = {
 	],
 	Conservation: ['GERP', 'PhyP100', 'PhyP30', 'MACIEC'],
 	Regulatory: ['FunSeq2', 'FIRE', 'REGDB', 'MACIER'],
-	'Replication Timing': ['RepS1', 'RepS2', 'RepS3', 'RepS4', 'RepG1b', 'RepG2'],
+	'Replication Timing': ['RepG1b', 'RepS1', 'RepS2', 'RepS3', 'RepS4', 'RepG2'],
 }
 
 const columns = [
