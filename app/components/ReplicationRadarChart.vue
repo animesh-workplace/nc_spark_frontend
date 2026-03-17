@@ -67,7 +67,7 @@ const buildSeriesEntry = entry => {
 		lineStyle: {
 			color,
 			width: isSpecial ? 2.5 : 1,
-			type: isMedian ? 'dashed' : 'solid',
+			type: 'solid',
 		},
 		itemStyle: { color },
 		areaStyle: isSpecial ? { color, opacity: 0.15 } : { color: ROW_COLOR, opacity: 0.05 },
