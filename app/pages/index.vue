@@ -104,10 +104,29 @@
 			<ScoreLine v-else :histogramData="histogramData" />
 		</div>
 
-		<div class="my-5 grid grid-cols-1 md:grid-cols-4 gap-2">
-			<BarChart :plotData="variantsPerChromosomeData" horizontal showAll />
-			<BarChart :plotData="snvChangeData" horizontal showAll />
-			<BarChart :plotData="trinucleotideData" horizontal showAll />
+		<div class="my-5">
+			<div class="flex justify-start mb-3">
+				<SelectButton
+					option-label="label"
+					option-value="value"
+					:allow-empty="false"
+					v-model="selectedView"
+					:options="viewOptions"
+				>
+					<template #option="{ option }">
+						<Icon :name="option.icon" class="w-5! h-5! text-gray-500 mr-2" />
+						{{ option.label }}
+					</template>
+				</SelectButton>
+			</div>
+			<div class=" grid grid-cols-1 md:grid-cols-4 gap-2">
+				<!-- Switcher -->
+
+				<BarChart :plotData="variantsPerChromosomeData" horizontal showAll />
+				<BarChart :plotData="trinucleotideData" horizontal showAll />
+				<BarChart :plotData="snvChangeData" horizontal showAll />
+				<BarChart :plotData="tiTvData" />
+			</div>
 		</div>
 
 		<div class="my-5 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -138,6 +157,7 @@ const viewOptions = ref([
 
 const selectedView = ref('line') // default is line
 const {
+	TiTvAPI,
 	UploadAPI,
 	FilterAPI,
 	SNVChangeAPI,
@@ -270,6 +290,7 @@ const trinucleotideData = ref({ data: [], categories: [] })
 const replicationData = ref({ stats: [], indicator: [], series_data: [] })
 const snvChangeData = ref({ data: [], categories: [] })
 const variantsPerChromosomeData = ref({ data: [], categories: [] })
+const tiTvData = ref({ data: [], categories: [] })
 
 const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 	isLoading.value = true
@@ -343,6 +364,17 @@ const FetchData6 = async () => {
 	}
 }
 
+const FetchData7 = async () => {
+	try {
+		const response = await TiTvAPI(session_id.value)
+		tiTvData.value = response
+	} catch (error) {
+		console.error('Error fetching data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+
 const handleTableSort = event => {
 	// Optional: refetch with server-side sort instead of relying on client sort
 	// FetchData(currentPage.value, pageSize.value, { sort_field: event.sortField, sort_order: event.sortOrder })
@@ -366,6 +398,7 @@ onMounted(() => {
 		await FetchData4()
 		await FetchData5()
 		await FetchData6()
+		await FetchData7()
 	})
 })
 </script>
