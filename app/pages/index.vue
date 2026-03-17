@@ -105,6 +105,7 @@
 		</div>
 
 		<div class="my-5 grid grid-cols-1 md:grid-cols-4 gap-2">
+			<BarChart :plotData="variantsPerChromosomeData" horizontal showAll />
 			<BarChart :plotData="snvChangeData" horizontal showAll />
 			<BarChart :plotData="trinucleotideData" horizontal showAll />
 		</div>
@@ -136,7 +137,15 @@ const viewOptions = ref([
 ])
 
 const selectedView = ref('line') // default is line
-const { UploadAPI, FilterAPI, DistributionAPI, ReplicationAPI, TrinucleotideAPI, SNVChangeAPI } = useGeneAPI()
+const {
+	UploadAPI,
+	FilterAPI,
+	SNVChangeAPI,
+	ReplicationAPI,
+	DistributionAPI,
+	TrinucleotideAPI,
+	VariantsPerChromosomeAPI,
+} = useGeneAPI()
 
 function handleFileSelect(event) {
 	const file = event.target.files[0]
@@ -260,6 +269,7 @@ const tableData = ref({ results: [], total_results: 0 })
 const trinucleotideData = ref({ data: [], categories: [] })
 const replicationData = ref({ stats: [], indicator: [], series_data: [] })
 const snvChangeData = ref({ data: [], categories: [] })
+const variantsPerChromosomeData = ref({ data: [], categories: [] })
 
 const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 	isLoading.value = true
@@ -322,6 +332,17 @@ const FetchData5 = async () => {
 	}
 }
 
+const FetchData6 = async () => {
+	try {
+		const response = await VariantsPerChromosomeAPI(session_id.value)
+		variantsPerChromosomeData.value = response
+	} catch (error) {
+		console.error('Error fetching data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+
 const handleTableSort = event => {
 	// Optional: refetch with server-side sort instead of relying on client sort
 	// FetchData(currentPage.value, pageSize.value, { sort_field: event.sortField, sort_order: event.sortOrder })
@@ -344,6 +365,7 @@ onMounted(() => {
 		await FetchData3()
 		await FetchData4()
 		await FetchData5()
+		await FetchData6()
 	})
 })
 </script>
