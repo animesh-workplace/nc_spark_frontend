@@ -74,9 +74,9 @@ export function useGeneAPI() {
 		}
 	}
 
-	const TrinucleotideAPI = async payload => {
+	const TrinucleotideAPI = async (payload, mode) => {
 		try {
-			const { data, error } = await useFetch(`${BASEURL}/${payload}/trinucleotide?mode=count`, {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/trinucleotide?mode=${mode}`, {
 				method: 'GET',
 			})
 
@@ -91,9 +91,9 @@ export function useGeneAPI() {
 		}
 	}
 
-	const SNVChangeAPI = async payload => {
+	const SNVChangeAPI = async (payload, mode) => {
 		try {
-			const { data, error } = await useFetch(`${BASEURL}/${payload}/snv-change?mode=count`, {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/snv-change?mode=${mode}`, {
 				method: 'GET',
 			})
 
@@ -108,9 +108,9 @@ export function useGeneAPI() {
 		}
 	}
 
-	const VariantsPerChromosomeAPI = async payload => {
+	const VariantsPerChromosomeAPI = async (payload, mode) => {
 		try {
-			const { data, error } = await useFetch(`${BASEURL}/${payload}/variants-per-chromosome?mode=count`, {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/variants-per-chromosome?mode=${mode}`, {
 				method: 'GET',
 			})
 
@@ -125,9 +125,9 @@ export function useGeneAPI() {
 		}
 	}
 
-	const TiTvAPI = async payload => {
+	const TiTvAPI = async (payload, mode) => {
 		try {
-			const { data, error } = await useFetch(`${BASEURL}/${payload}/titv?mode=count`, {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/titv?mode=${mode}`, {
 				method: 'GET',
 			})
 
