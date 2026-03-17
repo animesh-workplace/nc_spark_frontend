@@ -46,6 +46,20 @@
 			</label>
 		</div>
 
+		<div class="flex justify-start my-3">
+			<SelectButton
+				option-label="label"
+				option-value="value"
+				:allow-empty="false"
+				:options="genomeOptions"
+				v-model="selectedGenomeView"
+			>
+				<template #option="{ option }">
+					{{ option.label }}
+				</template>
+			</SelectButton>
+		</div>
+
 		<div class="flex justify-between">
 			<button
 				type="button"
@@ -110,8 +124,9 @@
 					option-label="label"
 					option-value="value"
 					:allow-empty="false"
-					v-model="selectedView"
-					:options="viewOptions"
+					@change="updateCharts"
+					v-model="barChartSelectedView"
+					:options="barChartViewOptions"
 				>
 					<template #option="{ option }">
 						<Icon :name="option.icon" class="w-5! h-5! text-gray-500 mr-2" />
@@ -120,8 +135,6 @@
 				</SelectButton>
 			</div>
 			<div class=" grid grid-cols-1 md:grid-cols-4 gap-2">
-				<!-- Switcher -->
-
 				<BarChart :plotData="variantsPerChromosomeData" horizontal showAll />
 				<BarChart :plotData="trinucleotideData" horizontal showAll />
 				<BarChart :plotData="snvChangeData" horizontal showAll />
@@ -150,11 +163,22 @@ const parsedData = ref([])
 const isDragging = ref(false)
 const uploadTime = ref(0) // Add upload time ref
 const isUploading = ref(false) // Add upload loading state
+const genomeOptions = ref([
+	{ label: 'hg19', value: 'hg19' },
+	{ label: 'hg38', value: 'hg38' },
+])
 const viewOptions = ref([
 	{ label: 'Line', value: 'line', icon: 'solar:diagram-up-linear' },
 	{ label: 'Histogram', value: 'histogram', icon: 'solar:chart-line-duotone' },
 ])
+const barChartViewOptions = ref([
+	{ label: 'Count', value: 'count', icon: 'tabler:antenna-bars-5' },
+	{ label: 'Percentage', value: 'frequency', icon: 'tabler:square-rounded-percentage' },
+	{ label: 'Box Plot', value: 'boxplot', icon: 'tabler:chart-candle' },
+])
 
+const selectedGenomeView = ref('hg38')
+const barChartSelectedView = ref('count') // default is count
 const selectedView = ref('line') // default is line
 const {
 	TiTvAPI,
@@ -259,7 +283,7 @@ const UploadData = async () => {
 
 		// Start upload timing
 
-		const response = await UploadAPI(parsedData.value, { genome: 'hg38' })
+		const response = await UploadAPI(parsedData.value, { genome: selectedGenomeView.value })
 
 		// Calculate upload time
 		const endTime = performance.now()
@@ -333,7 +357,7 @@ const FetchData3 = async () => {
 
 const FetchData4 = async () => {
 	try {
-		const response = await TrinucleotideAPI(session_id.value)
+		const response = await TrinucleotideAPI(session_id.value, barChartSelectedView.value)
 		trinucleotideData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
@@ -344,7 +368,7 @@ const FetchData4 = async () => {
 
 const FetchData5 = async () => {
 	try {
-		const response = await SNVChangeAPI(session_id.value)
+		const response = await SNVChangeAPI(session_id.value, barChartSelectedView.value)
 		snvChangeData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
@@ -355,7 +379,7 @@ const FetchData5 = async () => {
 
 const FetchData6 = async () => {
 	try {
-		const response = await VariantsPerChromosomeAPI(session_id.value)
+		const response = await VariantsPerChromosomeAPI(session_id.value, barChartSelectedView.value)
 		variantsPerChromosomeData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
@@ -366,13 +390,20 @@ const FetchData6 = async () => {
 
 const FetchData7 = async () => {
 	try {
-		const response = await TiTvAPI(session_id.value)
+		const response = await TiTvAPI(session_id.value, barChartSelectedView.value)
 		tiTvData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
 	} finally {
 		isLoading.value = false
 	}
+}
+
+const updateCharts = async () => {
+	await FetchData4()
+	await FetchData5()
+	await FetchData6()
+	await FetchData7()
 }
 
 const handleTableSort = event => {
