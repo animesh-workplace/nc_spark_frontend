@@ -104,10 +104,15 @@
 			<ScoreLine v-else :histogramData="histogramData" />
 		</div>
 
-		<div class="my-5 grid grid-cols-1 md:grid-cols-2 gap-6">
-			<ReplicationRadarChart :plotData="replicationData" />
+		<div class="my-5 grid grid-cols-1 md:grid-cols-4 gap-2">
+			<BarChart :plotData="snvChangeData" horizontal showAll />
 			<BarChart :plotData="trinucleotideData" horizontal showAll />
 		</div>
+
+		<div class="my-5 grid grid-cols-1 md:grid-cols-3 gap-6">
+			<ReplicationRadarChart :plotData="replicationData" />
+		</div>
+
 		<div class="my-5" v-if="tableData?.results?.length || false">
 			<VariantTable :data="tableData" :loading="isLoading" @sort="handleTableSort" @page="handleTablePage" />
 		</div>
@@ -131,7 +136,7 @@ const viewOptions = ref([
 ])
 
 const selectedView = ref('line') // default is line
-const { UploadAPI, FilterAPI, DistributionAPI, ReplicationAPI, TrinucleotideAPI } = useGeneAPI()
+const { UploadAPI, FilterAPI, DistributionAPI, ReplicationAPI, TrinucleotideAPI, SNVChangeAPI } = useGeneAPI()
 
 function handleFileSelect(event) {
 	const file = event.target.files[0]
@@ -250,10 +255,11 @@ const pageSize = ref(20)
 const currentPage = ref(1)
 const isLoading = ref(false)
 const histogramData = ref([])
-const session_id = ref('86eef76e-15b5-403a-a1cc-0ee088f41a3e')
+const session_id = ref('21552306-907c-42db-b870-1e22d40f349d')
 const tableData = ref({ results: [], total_results: 0 })
 const trinucleotideData = ref({ data: [], categories: [] })
 const replicationData = ref({ stats: [], indicator: [], series_data: [] })
+const snvChangeData = ref({ data: [], categories: [] })
 
 const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 	isLoading.value = true
@@ -305,6 +311,17 @@ const FetchData4 = async () => {
 	}
 }
 
+const FetchData5 = async () => {
+	try {
+		const response = await SNVChangeAPI(session_id.value)
+		snvChangeData.value = response
+	} catch (error) {
+		console.error('Error fetching data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+
 const handleTableSort = event => {
 	// Optional: refetch with server-side sort instead of relying on client sort
 	// FetchData(currentPage.value, pageSize.value, { sort_field: event.sortField, sort_order: event.sortOrder })
@@ -326,6 +343,7 @@ onMounted(() => {
 		await FetchData2()
 		await FetchData3()
 		await FetchData4()
+		await FetchData5()
 	})
 })
 </script>
