@@ -91,9 +91,27 @@ export function useGeneAPI() {
 		}
 	}
 
+	const SNVChangeAPI = async payload => {
+		try {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/snv-change?mode=count`, {
+				method: 'GET',
+			})
+
+			if (error.value) {
+				throw new Error(error.value || 'An error occurred')
+			}
+
+			return data.value
+		} catch (err) {
+			console.error(err)
+			throw err
+		}
+	}
+
 	return {
 		UploadAPI,
 		FilterAPI,
+		SNVChangeAPI,
 		ReplicationAPI,
 		DistributionAPI,
 		TrinucleotideAPI,
