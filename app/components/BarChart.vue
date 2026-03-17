@@ -80,7 +80,7 @@ const updateChart = () => {
 			return {
 				value,
 				itemStyle: {
-					color: value > 0.5 ? '#ef4444' : undefined,
+					// color: value > 0.5 ? '#ef4444' : undefined,
 					borderRadius: isTop ? roundedRadii : 0,
 				},
 			}
