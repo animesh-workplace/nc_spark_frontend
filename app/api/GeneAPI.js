@@ -125,7 +125,25 @@ export function useGeneAPI() {
 		}
 	}
 
+	const TiTvAPI = async payload => {
+		try {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/titv?mode=count`, {
+				method: 'GET',
+			})
+
+			if (error.value) {
+				throw new Error(error.value || 'An error occurred')
+			}
+
+			return data.value
+		} catch (err) {
+			console.error(err)
+			throw err
+		}
+	}
+
 	return {
+		TiTvAPI,
 		UploadAPI,
 		FilterAPI,
 		SNVChangeAPI,
