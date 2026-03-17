@@ -142,11 +142,30 @@ export function useGeneAPI() {
 		}
 	}
 
+	const TopVariantsAPI = async (payload, params) => {
+		try {
+			const { data, error } = await useFetch(`${BASEURL}/${payload}/top-variants`, {
+				method: 'GET',
+				query: params,
+			})
+
+			if (error.value) {
+				throw new Error(error.value || 'An error occurred')
+			}
+
+			return data.value
+		} catch (err) {
+			console.error(err)
+			throw err
+		}
+	}
+
 	return {
 		TiTvAPI,
 		UploadAPI,
 		FilterAPI,
 		SNVChangeAPI,
+		TopVariantsAPI,
 		ReplicationAPI,
 		DistributionAPI,
 		TrinucleotideAPI,
