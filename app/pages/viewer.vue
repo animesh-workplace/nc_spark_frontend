@@ -3,8 +3,8 @@
 	<div class="p-4">
 		<h1 class="text-xl font-bold mb-4">hg19 Genome Browser</h1>
 		<ClientOnly fallback-tag="p" fallback="Loading HiGlass...">
-			<HiGlassViewer />
-			<!-- <IGViewer /> -->
+			<!-- <HiGlassViewer /> -->
+			<IGViewer />
 		</ClientOnly>
 	</div>
 </template>
