@@ -111,6 +111,6 @@ onMounted(() => {
 <style scoped>
 .chart {
 	width: 30rem;
-	height: 30rem;
+	height: 36rem;
 }
 </style>
