@@ -1,5 +1,7 @@
 <template>
 	<div class="p-8">
+		<div class="gradient-box p-40 mb-4"></div>
+
 		<div class="flex items-center justify-center w-full">
 			<label
 				for="dropzone-file"
@@ -96,7 +98,7 @@
 			<p v-if="session_id" class="text-xs text-green-600 mt-1">Session ID: {{ session_id }}</p>
 		</div>
 
-		<section class="">
+		<section>
 			<div class="my-5">
 				<!-- Switcher -->
 				<div class="flex justify-start mb-3">
@@ -327,7 +329,7 @@ const tiTvData = ref({ data: [], categories: [] })
 const snvChangeData = ref({ data: [], categories: [] })
 const tableData = ref({ results: [], total_results: 0 })
 const trinucleotideData = ref({ data: [], categories: [] })
-const session_id = ref('e303d411-44c6-46ab-8c07-a8265eef8179')
+const session_id = ref('9da94b8c-95fd-4a83-8d1d-0e125eda22c2')
 const variantsPerChromosomeData = ref({ data: [], categories: [] })
 const replicationData = ref({ stats: [], indicator: [], series_data: [] })
 const topVariantsData = ref({
@@ -470,5 +472,16 @@ onMounted(() => {
 button:disabled {
 	opacity: 0.6;
 	cursor: not-allowed;
+}
+.gradient-box {
+	background: linear-gradient(
+		145deg,
+		hsl(340deg 100% 87%),
+		hsl(47deg 100% 87%) 40%,
+		hsl(47deg 100% 87%) 60%,
+		hsl(47deg 100% 53%)
+	);
+	border-radius: 1rem;
+	padding: 2rem;
 }
 </style>
