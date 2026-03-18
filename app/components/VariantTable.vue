@@ -175,10 +175,9 @@ const score_groups = {
 }
 
 const columns = [
-	{ field: 'chr', header: 'Chrom', frozen: false },
-	{ field: 'pos', header: 'Pos', frozen: false },
-	{ field: 'ref', header: 'Ref', frozen: false },
-	{ field: 'alt', header: 'Alt', frozen: false },
+	{ field: 'variant', header: 'Variant', frozen: false },
+	{ field: 'nearest_gene', header: 'Nearest Gene', frozen: false },
+	// { field: 'alt', header: 'Alt', frozen: false },
 	{ field: 'pathogenicity', header: 'Pathogenicity', frozen: false },
 	{ field: 'conservation', header: 'Conservation', frozen: false },
 	{ field: 'regulatory', header: 'Regulatory', frozen: false },
@@ -187,6 +186,8 @@ const columns = [
 
 const transformRow = row => ({
 	...row, // preserves all _mean, _median, _min, _max fields from API
+	variant: `${row.chr}:${row.pos}${row.ref}>${row.alt}`,
+	nearest_gene: `${row.nearest_gene_minus}, ${row.nearest_gene_plus}`,
 	regulatory: scoreFieldMap.regulatory.map((field, i) => [i, 0, row[field]]),
 	conservation: scoreFieldMap.conservation.map((field, i) => [i, 0, row[field]]),
 	pathogenicity: scoreFieldMap.pathogenicity.map((field, i) => [i, 0, row[field]]),
