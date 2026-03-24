@@ -186,8 +186,8 @@ const columns = [
 
 const transformRow = row => ({
 	...row, // preserves all _mean, _median, _min, _max fields from API
-	variant: `${row.chr}:${row.pos}${row.ref}>${row.alt}`,
-	nearest_gene: `${row.nearest_gene_minus}, ${row.nearest_gene_plus}`,
+	variant: `${row.chr}:${row.pos}:${row.ref}>${row.alt}`,
+	nearest_gene: `${row.nearest_gene_minus}, ${row.nearest_gene_plus} - ${row.gene_if_overlapping}`,
 	regulatory: scoreFieldMap.regulatory.map((field, i) => [i, 0, row[field]]),
 	conservation: scoreFieldMap.conservation.map((field, i) => [i, 0, row[field]]),
 	pathogenicity: scoreFieldMap.pathogenicity.map((field, i) => [i, 0, row[field]]),
