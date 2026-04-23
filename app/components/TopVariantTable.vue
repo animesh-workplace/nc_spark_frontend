@@ -14,7 +14,7 @@
 			<div v-for="(groupData, groupKey) in results" :key="groupKey">
 				<div class="card shadow-2 border-round-lg overflow-hidden">
 					<!-- Table Header -->
-					<div class=" px-3 py-2 flex align-items-center justify-content-between border border-gray-200">
+					<div class="px-3 py-2 flex align-items-center justify-content-between border border-gray-200">
 						<span class="font-bold text-lg capitalize mr-2">
 							{{ formatGroupName(groupData.group) }}
 						</span>
@@ -45,7 +45,7 @@
 						<Column field="variant" header="Variant" style="min-width: 200px">
 							<template #body="{ data }">
 								<div class="flex items-center gap-2">
-									<span class="text-sm">{{ data.variant }}</span>
+									<span class="text-sm font-mono">{{ data.variant }}</span>
 									<!-- Cross-hit badge -->
 									<Tag
 										severity="warning"
@@ -67,6 +67,19 @@
 										{{ data.group_score.toFixed(3) }}
 									</span>
 								</div>
+							</template>
+						</Column>
+
+						<!-- Nearest Gene Column -->
+						<Column header="Nearest Gene">
+							<template #body="{ data }">
+								<GeneAnnotationCell
+									:gene-if-overlapping="data.gene_if_overlapping"
+									:nearest-gene-plus="data.nearest_gene_plus"
+									:plus-distance="data.plus_distance"
+									:nearest-gene-minus="data.nearest_gene_minus"
+									:minus-distance="data.minus_distance"
+								/>
 							</template>
 						</Column>
 					</DataTable>
@@ -91,7 +104,20 @@
 			>
 				<Column field="variant" header="Variant" style="min-width: 220px">
 					<template #body="{ data }">
-						<span class="text-sm">{{ data.variant }}</span>
+						<span class="text-sm font-mono">{{ data.variant }}</span>
+					</template>
+				</Column>
+
+				<!-- Nearest Gene Column in cross-group table -->
+				<Column header="Nearest Gene">
+					<template #body="{ data }">
+						<GeneAnnotationCell
+							:gene-if-overlapping="data.gene_if_overlapping"
+							:nearest-gene-plus="data.nearest_gene_plus"
+							:plus-distance="data.plus_distance"
+							:nearest-gene-minus="data.nearest_gene_minus"
+							:minus-distance="data.minus_distance"
+						/>
 					</template>
 				</Column>
 
@@ -109,7 +135,7 @@
 					</template>
 				</Column>
 
-				<Column field="group_count" header="Group Count" style="width: 130px; text-align: center">
+				<Column field="group_count" header="Groups" style="width: 100px; text-align: center">
 					<template #body="{ data }">
 						<Badge
 							:value="data.group_count"
@@ -194,7 +220,7 @@ function groupTagSeverity(group) {
 
 /* ── Cross-hit row colours (used by :rowClass) ── */
 :deep(.cross-hit-row-high) {
-	background-color: #fef3c7 !important; /* amber-100 */
+	background-color: #fef3c7 !important;
 	font-weight: 600;
 }
 
@@ -203,7 +229,7 @@ function groupTagSeverity(group) {
 }
 
 :deep(.cross-hit-row-low) {
-	background-color: #eff6ff !important; /* blue-50 */
+	background-color: #eff6ff !important;
 }
 
 :deep(.cross-hit-row-low:hover) {
@@ -236,13 +262,43 @@ function groupTagSeverity(group) {
 	border: 2px solid #f59e0b;
 }
 
-/* ── Monospaced variant labels ── */
-.variant-label {
-	font-family: 'Courier New', monospace;
-	font-size: 0.78rem;
+/* ── Gene annotation cell ── */
+:deep(.gene-cell) {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+	cursor: default;
 }
 
-.cross-hit-badge {
-	cursor: help;
+:deep(.gene-name) {
+	font-family: 'Courier New', monospace;
+	color: #1e40af;
+}
+
+:deep(.gene-dist) {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.2rem;
+}
+
+:deep(.strand-badge) {
+	display: inline-block;
+	font-size: 0.65rem;
+	font-weight: 700;
+	background: #e0e7ff;
+	color: #3730a3;
+	border-radius: 3px;
+	padding: 0 3px;
+	line-height: 1.4;
+}
+
+:deep(.gene-tag) {
+	font-family: 'Courier New', monospace;
+	font-size: 0.7rem !important;
+}
+
+:deep(.gene-label-sub) {
+	font-style: italic;
 }
 </style>
