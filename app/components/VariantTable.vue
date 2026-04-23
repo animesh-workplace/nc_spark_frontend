@@ -40,7 +40,19 @@
 				:pt="{ columnHeaderContent: '!justify-center' }"
 			>
 				<template #body="slotProps">
-					<template v-if="col.field === 'pathogenicity'">
+					<!-- Nearest Gene -->
+					<template v-if="col.field === 'nearest_gene'">
+						<GeneAnnotationCell
+							:gene-if-overlapping="slotProps.data.gene_if_overlapping"
+							:nearest-gene-plus="slotProps.data.nearest_gene_plus"
+							:plus-distance="slotProps.data.plus_distance"
+							:nearest-gene-minus="slotProps.data.nearest_gene_minus"
+							:minus-distance="slotProps.data.minus_distance"
+						/>
+					</template>
+
+					<!-- Score groups -->
+					<template v-else-if="col.field === 'pathogenicity'">
 						<ClientOnly fallback-tag="span" fallback="Loading scores...">
 							<ScoreTicker
 								:textlabel="statMode"
@@ -106,6 +118,9 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue'
+import GeneAnnotationCell from '~/components/GeneAnnotationCell.vue'
+
 const props = defineProps({
 	loading: { type: Boolean, default: false },
 	data: {
@@ -177,7 +192,6 @@ const score_groups = {
 const columns = [
 	{ field: 'variant', header: 'Variant', frozen: false },
 	{ field: 'nearest_gene', header: 'Nearest Gene', frozen: false },
-	// { field: 'alt', header: 'Alt', frozen: false },
 	{ field: 'pathogenicity', header: 'Pathogenicity', frozen: false },
 	{ field: 'conservation', header: 'Conservation', frozen: false },
 	{ field: 'regulatory', header: 'Regulatory', frozen: false },
@@ -185,9 +199,11 @@ const columns = [
 ]
 
 const transformRow = row => ({
-	...row, // preserves all _mean, _median, _min, _max fields from API
+	...row, // preserves all _mean/_median/_min/_max fields and raw gene fields
 	variant: `${row.chr}:${row.pos}:${row.ref}>${row.alt}`,
-	nearest_gene: `${row.nearest_gene_minus}, ${row.nearest_gene_plus} - ${row.gene_if_overlapping}`,
+	// ── gene fields kept as-is from API (consumed directly by GeneAnnotationCell) ──
+	// gene_if_overlapping, nearest_gene_plus, plus_distance,
+	// nearest_gene_minus, minus_distance  → all passed through via ...row
 	regulatory: scoreFieldMap.regulatory.map((field, i) => [i, 0, row[field]]),
 	conservation: scoreFieldMap.conservation.map((field, i) => [i, 0, row[field]]),
 	pathogenicity: scoreFieldMap.pathogenicity.map((field, i) => [i, 0, row[field]]),
@@ -204,7 +220,6 @@ watch(
 	{ immediate: true },
 )
 
-// Sort key follows the selected statMode dynamically
 const handleSort = event => {
 	emit('sort', event)
 
