@@ -2,14 +2,27 @@
 
 @theme {
 	--font-sans: 'DM Sans', sans-serif;
+	--font-display: 'Fraunces', serif;
 }
 
-/* Remove IGV logo */
-.igv-logo {
-	display: none !important;
+.hero-gradient {
+	background: linear-gradient(135deg, #fce7f3 0%, #fef3c7 40%, #fde8aa 70%, #fef9c3 100%);
 }
 
-/* Also hide the logo container if present */
-:deep(.igv-logo-container) {
-	display: none !important;
+/* ── Accessibility ── */
+:focus-visible {
+	outline: 2px solid #db2777;
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
 }
