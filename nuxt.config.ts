@@ -54,7 +54,7 @@ export default defineNuxtConfig({
 			title:
 				'Noncoding Variant Prioritization Portal | National Institute of Biomedical Genomics | BRIC-NIBMG',
 			meta: [],
-			link: [],
+			link: [{ rel: 'icon', href: '/nvpp/favicon.ico' }],
 		},
 	},
 	primevue: {
@@ -65,7 +65,7 @@ export default defineNuxtConfig({
 		components: { include: [] },
 	},
 	build: { transpile: ['echarts', 'echarts-gl', 'zrender'] },
-	modules: ['@nuxt/icon', '@nuxtjs/google-fonts', '@primevue/nuxt-module', 'nuxt-echarts'],
+	modules: ['@nuxt/icon', '@nuxtjs/google-fonts', '@primevue/nuxt-module', 'nuxt-echarts', '@nuxt/image'],
 	googleFonts: {
 		preload: true,
 		prefetch: true,
