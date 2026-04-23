@@ -11,7 +11,11 @@
 			<div class="flex items-center justify-between h-16">
 				<!-- Logo -->
 				<NuxtLink to="/" class="flex items-center gap-2 shrink-0 group" aria-label="NC-SPARK home">
-					<NuxtImg src="/images/logo.png" alt="NC-SPARK Logo" class="w-8 h-8" />
+					<NuxtImg
+						src="/images/logo.png"
+						alt="NC-SPARK Logo"
+						class="w-8 h-8 transform transition-transform duration-500 ease-in-out hover:rotate-180"
+					/>
 					<div class="leading-none">
 						<span class="font-display font-bold text-stone-950 text-2xl tracking-tight">NC-SPARK</span>
 					</div>
