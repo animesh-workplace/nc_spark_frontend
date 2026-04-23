@@ -1,10 +1,8 @@
 <template>
 	<div class="font-sans">
-		<NavBar />
-		<main>
-			<slot />
-		</main>
-		<!-- <Footer /> -->
+		<AppHeader />
+		<slot />
+		<AppFooter />
 	</div>
 </template>
 
