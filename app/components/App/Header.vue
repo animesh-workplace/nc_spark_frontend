@@ -7,28 +7,15 @@
 				: 'bg-transparent border-b border-transparent'
 		"
 	>
-		<div class="max-w-7xl mx-auto px-5 md:px-8">
+		<div class="max-w-full px-5 md:px-8">
 			<div class="flex items-center justify-between h-16">
 				<!-- Logo -->
-				<a href="/" class="flex items-center gap-2.5 shrink-0 group" aria-label="NC-SPARK home">
-					<!-- DNA icon — warm-tinted for Outseta palette -->
-					<!-- <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true" class="group-hover:scale-105 transition-transform duration-200">
-            <rect width="34" height="34" rx="8" fill="#1c1917"/>
-            <path d="M9 7 Q17 13 25 7" stroke="#db2777" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M9 27 Q17 21 25 27" stroke="#db2777" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <path d="M9 17 Q17 11 25 17" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <line x1="13" y1="9.5" x2="13" y2="15.5" stroke="#db2777" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-            <line x1="17" y1="11"  x2="17" y2="14"   stroke="#f59e0b" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
-            <line x1="21" y1="9.5" x2="21" y2="15.5" stroke="#db2777" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-            <line x1="13" y1="18.5" x2="13" y2="24.5" stroke="#db2777" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-            <line x1="17" y1="20"   x2="17" y2="23"   stroke="#f59e0b" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
-            <line x1="21" y1="18.5" x2="21" y2="24.5" stroke="#db2777" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-          </svg> -->
+				<NuxtLink to="/" class="flex items-center gap-2 shrink-0 group" aria-label="NC-SPARK home">
+					<NuxtImg src="/images/logo.png" alt="NC-SPARK Logo" class="w-8 h-8" />
 					<div class="leading-none">
-						<span class="font-display font-bold text-stone-950 text-lg tracking-tight">NC-SPARK</span>
-						<!-- <span class="hidden sm:block text-[10px] font-mono text-pink-600 tracking-widest uppercase opacity-80">Non-Coding Variant Profiler</span> -->
+						<span class="font-display font-bold text-stone-950 text-2xl tracking-tight">NC-SPARK</span>
 					</div>
-				</a>
+				</NuxtLink>
 
 				<!-- Desktop Navigation -->
 				<nav class="hidden lg:flex items-center gap-1" role="navigation" aria-label="Main navigation">
