@@ -71,7 +71,12 @@ export default defineNuxtConfig({
 		prefetch: true,
 		useStylesheet: true,
 		outputDir: 'app/assets',
-		families: { Poppins: true, 'Lexend+Deca': { wght: '100..900' }, 'DM+Sans': { wght: '100..900' } },
+		families: {
+			Poppins: true,
+			'Lexend+Deca': { wght: '100..900' },
+			'DM+Sans': { wght: '100..900' },
+			Fraunces: { wght: '100..900' },
+		},
 	},
 	icon: { clientBundle: { scan: true }, serverBundle: { collections: ['solar', 'svg-spinners'] } },
 	echarts: {
