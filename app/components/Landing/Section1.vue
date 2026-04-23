@@ -9,9 +9,10 @@
 			<!-- Headline -->
 			<h1
 				id="hero-heading"
-				class="font-display font-black text-stone-950 leading-[1.05] mb-3"
+				class="font-display font-black text-stone-950 leading-[1.05] mb-3 flex gap-4 justify-center items-center"
 				style="font-size: clamp(3rem, 7vw, 5.5rem);"
 			>
+				<NuxtImg src="/images/logo.png" alt="NC-SPARK Logo" class="w-20 h-20" />
 				<span class="text-pink-600">NC-SPARK</span>
 			</h1>
 			<p
