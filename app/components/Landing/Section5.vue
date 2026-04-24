@@ -1,5 +1,9 @@
 <template>
-	<section class="pt-12 bg-white" id="features" aria-labelledby="features-heading">
+	<section
+		class="py-12 bg-linear-to-br from-[#e6e5e5] to-[#EEF5F7]"
+		id="features"
+		aria-labelledby="features-heading"
+	>
 		<div class="max-w-7xl mx-auto px-5 md:px-8">
 			<!-- Header -->
 			<div class="text-center mb-16 reveal">
@@ -26,11 +30,11 @@
 				<div
 					:key="step.title"
 					v-for="(step, i) in steps"
-					class="bg-stone-300 rounded-3xl border border-stone-200 p-7 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all relative overflow-hidden reveal"
+					class="bg-[#23717a]/20 rounded-3xl p-7 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all relative overflow-hidden reveal"
 				>
 					<!-- Step number watermark -->
 					<div
-						class="absolute top-4 right-5 font-display font-black text-7xl text-stone-400 leading-none select-none"
+						class="absolute top-4 right-5 font-display font-black text-7xl text-gray-400 leading-none select-none"
 						aria-hidden="true"
 					>
 						{{ i + 1 }}
@@ -71,7 +75,15 @@
 				<div
 					v-for="feat in features"
 					:key="feat.title"
-					class="bg-amber-50 rounded-2xl border border-stone-100 p-6 hover:border-stone-200 hover:shadow-sm transition-all reveal flex gap-4"
+					class="bg-white rounded-2xl border p-6 border-stone-200 shadow-sm transition-all reveal flex gap-4 hover:-translate-y-0.5"
+					style="background-image:
+							repeating-linear-gradient(
+								45deg,
+								rgba(255,255,255,0.2) 0px,
+								rgba(255,255,255,0.2) 1px,
+								transparent 5px,
+								transparent 10px
+							);"
 				>
 					<div
 						class="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center text-xl"
@@ -90,8 +102,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="mt-12 h-20 bg-linear-to-b from-transparent to-amber-50" aria-hidden="true" />
 	</section>
 </template>
 
