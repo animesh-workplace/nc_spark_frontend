@@ -5,24 +5,115 @@
 	--font-display: 'Fraunces', serif;
 }
 
+.thatch-overlay {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+
+	background-image: repeating-linear-gradient(
+			45deg,
+			rgba(31, 111, 120, 0.06) 0px,
+			rgba(31, 111, 120, 0.06) 1px,
+			transparent 5px,
+			transparent 10px
+		),
+		repeating-linear-gradient(
+			-45deg,
+			rgba(76, 175, 80, 0.05) 0px,
+			rgba(76, 175, 80, 0.05) 1px,
+			transparent 5px,
+			transparent 10px
+		);
+
+	mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent 90%);
+	opacity: 0.6;
+}
+
 .hero-gradient {
-	background: linear-gradient(135deg, #fce7f3 0%, #fef3c7 40%, #fde8aa 70%, #fef9c3 100%);
+	--mx: 50%;
+	--my: 40%;
+	--intensity: 0.12;
+
+	background: radial-gradient(
+			circle at var(--mx) var(--my),
+			rgba(38, 198, 218, var(--intensity)),
+			transparent 40%
+		),
+		linear-gradient(135deg, #f8fbfc 0%, #eef5f7 40%, #e8f5e9 100%);
+
+	background-size: 120% 120%;
+	animation: gradientDrift 40s ease-in-out infinite alternate;
+
+	transition: background 0.6s ease;
+}
+
+/* Hover = slightly stronger field */
+.hero-gradient:hover {
+	--intensity: 0.16;
+}
+
+/* Drift stays same */
+@keyframes gradientDrift {
+	0% {
+		background-position: 50% 40%, 0% 50%;
+	}
+	50% {
+		background-position: 52% 42%, 100% 50%;
+	}
+	100% {
+		background-position: 48% 38%, 0% 50%;
+	}
 }
 
 /* ── Accessibility ── */
+
 :focus-visible {
-	outline: 2px solid #db2777;
+	border-radius: 6px;
 	outline-offset: 3px;
-	border-radius: 4px;
+	outline: 2px solid #26c6da;
+	box-shadow: 0 0 0 2px rgba(38, 198, 218, 0.25);
 }
+
+/* Better focus for dark surfaces (like terminal) */
+.dark :focus-visible {
+	outline: 2px solid #26c6da;
+	box-shadow: 0 0 0 2px rgba(38, 198, 218, 0.4);
+}
+
+/* Screen-reader only utility (unchanged but modernized clip) */
 .sr-only {
-	position: absolute;
+	border: 0;
 	width: 1px;
-	height: 1px;
 	padding: 0;
+	height: 1px;
 	margin: -1px;
 	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
+	position: absolute;
 	white-space: nowrap;
-	border-width: 0;
+	clip-path: inset(50%);
+}
+
+@keyframes orbit {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes rowIn {
+	0% {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.animate-row-in {
+	animation: rowIn 0.5s ease-out;
+	background: linear-gradient(90deg, rgba(38, 198, 218, 0.08), transparent);
 }
