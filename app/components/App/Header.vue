@@ -1,24 +1,31 @@
 <template>
 	<header
-		class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+		class="fixed top-0 left-0 right-0 z-50 transition-all duration-100"
 		:class="
 			scrolled
-				? 'bg-white/95 backdrop-blur-sm shadow-sm border-b border-stone-200'
+				? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-[#E0E6E8]'
 				: 'bg-transparent border-b border-transparent'
 		"
 	>
 		<div class="max-w-full px-5 md:px-8">
 			<div class="flex items-center justify-between h-16">
 				<!-- Logo -->
-				<NuxtLink to="/" class="flex items-center gap-2 shrink-0 group" aria-label="NC-SPARK home">
-					<NuxtImg
-						src="/images/logo.png"
-						alt="NC-SPARK Logo"
-						class="w-8 h-8 transform transition-transform duration-500 ease-in-out group-hover:rotate-180"
-					/>
-					<div class="leading-none">
-						<span class="font-display font-bold text-stone-950 text-2xl tracking-tight">NC-SPARK</span>
+				<NuxtLink to="/" class="flex items-center gap-3 shrink-0 group" aria-label="NC-SPARK home">
+					<div class="relative">
+						<NuxtImg
+							src="/images/logo.png"
+							alt="NC-SPARK Logo"
+							class="w-9 h-9 transition-transform duration-500 ease-in-out group-hover:rotate-180"
+						/>
+						<!-- subtle spark glow -->
+						<div
+							class="absolute inset-0 rounded-full bg-[#26C6DA]/20 blur-md opacity-0 group-hover:opacity-100 transition"
+						/>
 					</div>
+
+					<span class="font-display font-bold text-[#1F6F78] text-2xl tracking-tight">
+						NC-SPARK
+					</span>
 				</NuxtLink>
 
 				<!-- Desktop Navigation -->
@@ -27,7 +34,9 @@
 						v-for="item in navItems"
 						:key="item.label"
 						:href="item.href"
-						class="px-3.5 py-2 rounded-lg text-sm font-semibold text-stone-600 hover:text-stone-950 hover:bg-stone-100 transition-all duration-150"
+						class="px-4 py-2 rounded-lg text-sm font-semibold text-[#607D8B] 
+						hover:text-[#1F6F78] hover:bg-[#EEF5F7] 
+						transition-all duration-200"
 					>
 						{{ item.label }}
 					</a>
@@ -37,7 +46,11 @@
 				<div class="hidden lg:flex items-center gap-3">
 					<NuxtLink
 						to="/upload"
-						class="px-4 py-2 text-sm font-semibold text-white bg-pink-600 rounded-full hover:bg-pink-700 transition-all"
+						class="px-5 py-2.5 text-sm font-semibold text-white 
+						bg-[#26C6DA] rounded-full 
+						hover:bg-[#1FA4B8] 
+						shadow-md shadow-[#26C6DA]/30 
+						transition-all duration-200"
 					>
 						Try NC-SPARK
 					</NuxtLink>
@@ -45,7 +58,9 @@
 
 				<!-- Mobile toggle -->
 				<button
-					class="lg:hidden p-2 rounded-lg hover:bg-stone-100 transition-all text-stone-700"
+					class="lg:hidden p-2 rounded-lg text-[#455A64] 
+					hover:bg-[#EEF5F7] hover:text-[#1F6F78] 
+					transition-all"
 					@click="mobileOpen = !mobileOpen"
 					:aria-expanded="mobileOpen"
 					aria-label="Toggle menu"
@@ -85,27 +100,29 @@
 			leave-from-class="opacity-100"
 			leave-to-class="opacity-0"
 		>
-			<div v-if="mobileOpen" class="lg:hidden border-t border-stone-200 bg-white/98 backdrop-blur-sm">
+			<div v-if="mobileOpen" class="lg:hidden border-t border-[#E0E6E8] bg-white/95 backdrop-blur-md">
 				<nav class="max-w-7xl mx-auto px-5 py-4 flex flex-col gap-1">
-					<a
+					<NuxtLink
 						v-for="item in navItems"
 						:key="item.label"
 						:href="item.href"
-						class="px-3 py-2.5 rounded-lg font-semibold text-stone-700 hover:bg-stone-100 hover:text-stone-950 transition-all"
+						class="px-3 py-2.5 rounded-lg font-semibold text-[#607D8B] 
+						hover:bg-[#EEF5F7] hover:text-[#1F6F78] 
+						transition-all"
 					>
 						{{ item.label }}
-					</a>
-					<div class="pt-3 border-t border-stone-100 mt-2 flex flex-col gap-2">
-						<a
-							href="#docs"
-							class="w-full text-center text-sm py-2.5 font-semibold text-stone-700 border border-stone-300 rounded-full hover:border-stone-500 transition-all"
-							>Documentation</a
+					</NuxtLink>
+
+					<div class="pt-3 border-t border-[#EEF2F3] mt-2 flex flex-col gap-2">
+						<NuxtLink
+							to="/upload"
+							class="w-full text-center text-sm py-2.5 font-semibold text-white 
+							bg-[#26C6DA] rounded-full 
+							hover:bg-[#1FA4B8] 
+							transition-all"
 						>
-						<a
-							href="#try"
-							class="w-full text-center text-sm py-2.5 font-semibold text-white bg-pink-600 rounded-full hover:bg-pink-700 transition-all"
-							>Try NC-SPARK</a
-						>
+							Try NC-SPARK
+						</NuxtLink>
 					</div>
 				</nav>
 			</div>
@@ -113,17 +130,11 @@
 	</header>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const scrolled = ref(false)
 const mobileOpen = ref(false)
 
-const navItems = [
-	// { label: 'Features', href: '#features' },
-	// { label: 'Scoring Domains', href: '#domains' },
-	// { label: 'Architecture', href: '#architecture' },
-	// { label: 'Tools', href: '#tools' },
-	// { label: "Publication", href: "#publication" },
-]
+const navItems = []
 
 onMounted(() => {
 	const onScroll = () => {
