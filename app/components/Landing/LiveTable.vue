@@ -21,7 +21,11 @@
 				:rowClass="rowClass"
 				class="min-w-[900px] rounded-2xl overflow-hidden border border-[#E0E6E8] bg-white/80 backdrop-blur-sm transition-opacity duration-500"
 			>
-				<Column field="variant" header="Variant" :pt="{ columnHeaderContent: '!justify-center !p-2' }">
+				<Column field="variant" :pt="{ columnHeaderContent: '!justify-center !p-2' }">
+					<template #header>
+						<span class="font-bold">Variant</span>
+					</template>
+
 					<template #body="slotProps">
 						<span class="text-xs md:text-sm text-[#263238] justify-center  flex">
 							{{ slotProps.data.variant }}
@@ -29,7 +33,11 @@
 					</template>
 				</Column>
 
-				<Column header="Pathogenicity" :pt="{ columnHeaderContent: '!justify-center' }">
+				<Column :pt="{ columnHeaderContent: '!justify-center' }">
+					<template #header>
+						<span class="font-bold">Pathogenicity</span>
+					</template>
+
 					<template #body="slotProps">
 						<ScoreTicker
 							textlabel="median"
@@ -39,7 +47,11 @@
 					</template>
 				</Column>
 
-				<Column header="Conservation" :pt="{ columnHeaderContent: '!justify-center' }">
+				<Column :pt="{ columnHeaderContent: '!justify-center' }">
+					<template #header>
+						<span class="font-bold">Conservation</span>
+					</template>
+
 					<template #body="slotProps">
 						<ScoreTicker
 							textlabel="median"
@@ -49,7 +61,11 @@
 					</template>
 				</Column>
 
-				<Column header="Regulatory" :pt="{ columnHeaderContent: '!justify-center' }">
+				<Column :pt="{ columnHeaderContent: '!justify-center' }">
+					<template #header>
+						<span class="font-bold">Regulatory</span>
+					</template>
+
 					<template #body="slotProps">
 						<ScoreTicker
 							textlabel="median"
@@ -59,7 +75,11 @@
 					</template>
 				</Column>
 
-				<Column header="Replication" :pt="{ columnHeaderContent: '!justify-center' }">
+				<Column :pt="{ columnHeaderContent: '!justify-center' }">
+					<template #header>
+						<span class="font-bold">Replication Timing</span>
+					</template>
+
 					<template #body="slotProps">
 						<ScoreTicker
 							textlabel="median"
@@ -83,8 +103,17 @@ const jitter = val => Math.min(1, Math.max(0, Number((val + (Math.random() - 0.5
 const randomVariant = () => {
 	const chr = Math.floor(Math.random() * 22) + 1
 	const pos = Math.floor(Math.random() * 1e6)
+
 	const bases = ['A', 'T', 'G', 'C']
-	return `chr${chr}:${pos}:${bases[0]}>${bases[1]}`
+
+	const reference = bases[Math.floor(Math.random() * bases.length)]
+
+	let alt
+	do {
+		alt = bases[Math.floor(Math.random() * bases.length)]
+	} while (alt === reference) // ensure mutation is valid
+
+	return `chr${chr}:${pos}:${reference}>${alt}`
 }
 
 const score_groups = {
@@ -111,8 +140,6 @@ const buildRow = () => ({
 	regulatory: buildTicker(3, 'Regulatory'),
 	replication: buildTicker(3, 'Replication Timing'),
 })
-
-/* ---------- INIT ---------- */
 
 const init = async () => {
 	rows.value = Array.from({ length: 6 }).map(() => buildRow())
