@@ -121,3 +121,9 @@
 .animate-marquee {
 	animation: marquee 35s linear infinite;
 }
+
+/* Smooth edge fade using mask */
+.marquee-fade {
+	-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+	mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
