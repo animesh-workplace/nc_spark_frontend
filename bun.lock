@@ -11,6 +11,8 @@
         "@nuxt/schema": "^4.2.1",
         "@primeuix/themes": "^1.2.5",
         "@tailwindcss/vite": "^4.1.17",
+        "filepond": "^4.32.12",
+        "filepond-plugin-file-validate-type": "^1.2.9",
         "higlass": "^2.2.3",
         "higlass-bigwig-datafetcher": "^0.2.0",
         "higlass-clinvar": "^0.2.5",
@@ -33,6 +35,7 @@
         "react-dom": "17.0.2",
         "tailwindcss": "^4.1.17",
         "vue": "^3.5.24",
+        "vue-filepond": "^7.0.4",
         "vue-router": "^4.6.3",
       },
       "devDependencies": {
@@ -1084,6 +1087,10 @@
 
     "file-uri-to-path": ["file-uri-to-path@2.0.0", "", {}, "sha512-hjPFI8oE/2iQPVe4gbrJ73Pp+Xfub2+WI2LlXDbsaJBwT5wuMh35WNWVYYTpnz895shtwfyutMFLFywpQAFdLg=="],
 
+    "filepond": ["filepond@4.32.12", "", {}, "sha512-wro0/deLwua9CkL7HJygOlDaPo1c7Ov8kfzbZjH7m4hdi56gdHGDeRWnYa+qXnRm3Lty69gUGVFb3JZy/9vT8g=="],
+
+    "filepond-plugin-file-validate-type": ["filepond-plugin-file-validate-type@1.2.9", "", { "peerDependencies": { "filepond": ">=1.x <5.x" } }, "sha512-Tzv07aNdZvjUXDRA3XL16QMEvh6llDrXlcZ6W0eTHQ+taHaVg/JKJTFs/AViO+6ZcpPCcQStbhYEL2HoS+vldw=="],
+
     "fill-range": ["fill-range@7.1.1", "", { "dependencies": { "to-regex-range": "^5.0.1" } }, "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg=="],
 
     "foreground-child": ["foreground-child@3.3.1", "", { "dependencies": { "cross-spawn": "^7.0.6", "signal-exit": "^4.0.1" } }, "sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw=="],
@@ -1893,6 +1900,8 @@
     "vue-devtools-stub": ["vue-devtools-stub@0.1.0", "", {}, "sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ=="],
 
     "vue-echarts": ["vue-echarts@8.0.1", "", { "peerDependencies": { "echarts": "^6.0.0", "vue": "^3.3.0" } }, "sha512-23rJTFLu1OUEGRWjJGmdGt8fP+8+ja1gVgzMYPIPaHWpXegcO1viIAaeu2H4QHESlVeHzUAHIxKXGrwjsyXAaA=="],
+
+    "vue-filepond": ["vue-filepond@7.0.4", "", { "peerDependencies": { "filepond": ">=4.7.4 < 5.x", "vue": ">=3 < 4" } }, "sha512-HvWlCG8qjvyykrpPTDjJ+JqsHTXt5/0zWMX9vu7kU3JXCUODPUkGi9prZcauOnIZ4MqyeSZ9M0sDVwdMATyt1g=="],
 
     "vue-router": ["vue-router@4.6.3", "", { "dependencies": { "@vue/devtools-api": "^6.6.4" }, "peerDependencies": { "vue": "^3.5.0" } }, "sha512-ARBedLm9YlbvQomnmq91Os7ck6efydTSpRP3nuOKCvgJOHNrhRoJDSKtee8kcL1Vf7nz6U+PMBL+hTvR3bTVQg=="],
 
