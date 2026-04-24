@@ -127,15 +127,13 @@ const before = [
 	'Hours of compute time per 50,000-variant cohort',
 	'Incompatible score scales requiring manual normalization',
 	'No unified ranking — must export/merge CSVs manually',
-	'Tool version drift and installation dependency hell',
-	'No real-time feedback during TCGA or oral-cancer cohort analysis',
 ]
 const after = [
-	'Single API call returns 25+ scores in < 50 ms',
-	'Pre-annotated ClickHouse knowledgebase with 8B+ rows',
+	'Single API call returns 25+ scores',
+	'Pre-annotated knowledgebase with 8B+ rows',
 	'All scores normalized to a unified comparative scale',
 	'Automated multi-domain prioritization ranking output',
 	'Always up-to-date — no local tool installations needed',
-	'Batch-upload VCF/CSV for 50k variants with real-time progress',
+	'Batch-upload VCF/CSV/TSV for 50k variants with real-time progress',
 ]
 </script>
