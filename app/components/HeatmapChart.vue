@@ -48,34 +48,36 @@ const chartOption = ref({
 		show: false,
 	},
 
-	// Piecewise visualMap: sentinel -1 → black, 0–1 → gradient
-	// visualMap: {
-	// 	type: 'piecewise',
-	// 	show: false,
-	// 	pieces: [
-	// 		{ min: -1, max: -0.5, color: '#1a1a1a', opacity: 0.5 },
-	// 		{ min: 0, max: 0.1, color: '#313695', opacity: 1 },
-	// 		{ min: 0.1, max: 0.2, color: '#4575b4', opacity: 1 },
-	// 		{ min: 0.2, max: 0.3, color: '#74add1', opacity: 1 },
-	// 		{ min: 0.3, max: 0.4, color: '#abd9e9', opacity: 1 },
-	// 		{ min: 0.4, max: 0.5, color: '#e0f3f8', opacity: 1 },
-	// 		{ min: 0.5, max: 0.6, color: '#ffffbf', opacity: 1 },
-	// 		{ min: 0.6, max: 0.7, color: '#fee090', opacity: 1 },
-	// 		{ min: 0.7, max: 0.8, color: '#fdae61', opacity: 1 },
-	// 		{ min: 0.8, max: 0.9, color: '#f46d43', opacity: 1 },
-	// 		{ min: 0.9, max: 0.98, color: '#d73027', opacity: 1 },
-	// 		{ min: 0.99, max: 1.0, color: '#a50026', opacity: 1 },
-	// 	],
-	// },
-	visualMap: {
-		type: 'continuous',
-		show: false,
-		min: 0,
-		max: 1,
-		inRange: {
-			color: ['#EEF5F7', '#26C6DA', '#1F6F78'],
-		},
-	},
+	visualMap:
+		props.chartType === 'landing'
+			? {
+					type: 'continuous',
+					show: false,
+					min: 0,
+					max: 1,
+					inRange: {
+						color: ['#EEF5F7', '#26C6DA', '#1F6F78'],
+					},
+			  }
+			: // Piecewise visualMap: sentinel -1 → black, 0–1 → gradient
+			  {
+					type: 'piecewise',
+					show: false,
+					pieces: [
+						{ min: -1, max: -0.5, color: '#1a1a1a', opacity: 0.5 },
+						{ min: 0, max: 0.1, color: '#313695', opacity: 1 },
+						{ min: 0.1, max: 0.2, color: '#4575b4', opacity: 1 },
+						{ min: 0.2, max: 0.3, color: '#74add1', opacity: 1 },
+						{ min: 0.3, max: 0.4, color: '#abd9e9', opacity: 1 },
+						{ min: 0.4, max: 0.5, color: '#e0f3f8', opacity: 1 },
+						{ min: 0.5, max: 0.6, color: '#ffffbf', opacity: 1 },
+						{ min: 0.6, max: 0.7, color: '#fee090', opacity: 1 },
+						{ min: 0.7, max: 0.8, color: '#fdae61', opacity: 1 },
+						{ min: 0.8, max: 0.9, color: '#f46d43', opacity: 1 },
+						{ min: 0.9, max: 0.98, color: '#d73027', opacity: 1 },
+						{ min: 0.99, max: 1.0, color: '#a50026', opacity: 1 },
+					],
+			  },
 
 	series: [
 		{
