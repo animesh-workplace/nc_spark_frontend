@@ -1,5 +1,14 @@
 <template>
-	<section class="pt-24 bg-pink-50" id="architecture" aria-labelledby="arch-heading">
+	<section class="py-12 relative overflow-hidden bg-[#8cc88f]" id="architecture">
+		<div
+			class="absolute inset-0 pointer-events-none opacity-60"
+			style="
+		background:
+		radial-gradient(circle at 20% 30%, rgba(38,198,218,0.08), transparent 50%),
+		radial-gradient(circle at 80% 70%, rgba(76,175,80,0.08), transparent 50%);
+	"
+		></div>
+
 		<div class="max-w-7xl mx-auto px-5 md:px-8">
 			<!-- Header -->
 			<div class="text-center mb-16 reveal">
@@ -31,8 +40,7 @@
 					>
 						<!-- Node card -->
 						<div
-							class="bg-white rounded-2xl border p-5 text-center w-full md:w-40 shrink-0 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default"
-							:style="{ borderColor: node.border }"
+							class="bg-white rounded-2xl p-5 text-center w-full md:w-40 shrink-0 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default"
 						>
 							<div
 								class="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center text-2xl"
@@ -56,10 +64,10 @@
 							class="hidden md:flex items-center justify-center w-10 shrink-0"
 						>
 							<svg width="28" height="14" viewBox="0 0 28 14" fill="none">
-								<path d="M0 7 H22" stroke="#d6d3d1" stroke-width="1.5" />
+								<path d="M0 7 H22" stroke="#fff" stroke-width="1.5" />
 								<path
 									d="M18 3 L26 7 L18 11"
-									stroke="#a8a29e"
+									stroke="#fff"
 									stroke-width="1.5"
 									stroke-linecap="round"
 									stroke-linejoin="round"
@@ -124,8 +132,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="mt-10 h-20 bg-linear-to-b from-transparent to-white" aria-hidden="true" />
 	</section>
 </template>
 
@@ -136,7 +142,7 @@ const flowNodes = [
 		tag: 'Input',
 		iconBg: '#fce7f3',
 		border: '#fbcfe8',
-		label: 'VCF / CSV',
+		label: 'VCF / CSV / TSV',
 		color: 'text-[#db2777]',
 		sub: 'VCF or tabular upload',
 	},
