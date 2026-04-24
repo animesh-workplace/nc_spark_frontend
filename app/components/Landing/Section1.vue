@@ -37,17 +37,10 @@
 			<!-- CTAs -->
 			<div class="flex flex-wrap justify-center gap-3 mb-14">
 				<NuxtLink
-					href="#try"
+					to="/"
 					class="px-8 py-3.5 text-base font-semibold text-white bg-[#26C6DA] rounded-full hover:bg-[#1FA4B8] transition-all shadow-lg shadow-[#26C6DA]/30"
 				>
 					Launch Portal
-				</NuxtLink>
-
-				<NuxtLink
-					href="#architecture"
-					class="px-8 py-3.5 text-base font-semibold text-[#1F6F78] bg-white border border-[#1F6F78]/20 rounded-full hover:bg-[#EEF5F7] transition-all"
-				>
-					View Architecture
 				</NuxtLink>
 			</div>
 
