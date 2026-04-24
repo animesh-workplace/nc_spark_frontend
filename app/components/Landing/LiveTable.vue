@@ -33,9 +33,15 @@
 					</template>
 				</Column>
 
-				<Column :pt="{ columnHeaderContent: '!justify-center' }">
+				<Column
+					:pt="{ columnHeaderContent: '!justify-center', headerCell: '!bg-[#1F6F78]/10' }"
+					class="bg-[#1F6F78]/10"
+				>
 					<template #header>
-						<span class="font-bold">Pathogenicity</span>
+						<div class="flex items-center gap-2 justify-center">
+							<Icon name="tabler:virus" class="text-[#1F6F78]" />
+							<span class="font-bold">Pathogenicity</span>
+						</div>
 					</template>
 
 					<template #body="slotProps">
@@ -47,9 +53,15 @@
 					</template>
 				</Column>
 
-				<Column :pt="{ columnHeaderContent: '!justify-center' }">
+				<Column
+					:pt="{ columnHeaderContent: '!justify-center', headerCell: '!bg-[#4CAF50]/10' }"
+					class="bg-[#4CAF50]/10"
+				>
 					<template #header>
-						<span class="font-bold">Conservation</span>
+						<div class="flex items-center gap-2 justify-center">
+							<Icon name="tabler:leaf" class="text-[#4CAF50]" />
+							<span class="font-bold">Conservation</span>
+						</div>
 					</template>
 
 					<template #body="slotProps">
@@ -61,9 +73,15 @@
 					</template>
 				</Column>
 
-				<Column :pt="{ columnHeaderContent: '!justify-center' }">
+				<Column
+					:pt="{ columnHeaderContent: '!justify-center', headerCell: '!bg-[#455A64]/10' }"
+					class="bg-[#455A64]/10"
+				>
 					<template #header>
-						<span class="font-bold">Regulatory</span>
+						<div class="flex items-center gap-2 justify-center">
+							<Icon name="tabler:shield" class="text-[#455A64]" />
+							<span class="font-bold">Regulatory</span>
+						</div>
 					</template>
 
 					<template #body="slotProps">
@@ -75,9 +93,15 @@
 					</template>
 				</Column>
 
-				<Column :pt="{ columnHeaderContent: '!justify-center' }">
+				<Column
+					:pt="{ columnHeaderContent: '!justify-center', headerCell: '!bg-[#7CB342]/10' }"
+					class="bg-[#7CB342]/10"
+				>
 					<template #header>
-						<span class="font-bold">Replication Timing</span>
+						<div class="flex items-center gap-2 justify-center">
+							<Icon name="tabler:stopwatch" class="text-[#7CB342]" />
+							<span class="font-bold">Replication Timing</span>
+						</div>
 					</template>
 
 					<template #body="slotProps">
