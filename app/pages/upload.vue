@@ -10,7 +10,14 @@
       complete   → redirect to /analysis/:session_id
       error      → inline error card + retry button
   -->
-	<div class="min-h-screen bg-amber-50 pt-16 pb-16">
+	<div
+		class="min-h-screen pt-16 pb-16 relative overflow-hidden"
+		style="
+		background:
+		radial-gradient(circle at var(--mx,50%) var(--my,40%), rgba(38,198,218,0.08), transparent 40%),
+		linear-gradient(135deg, #f8fbfc 0%, #eef5f7 50%, #e8f5e9 100%);
+	"
+	>
 		<div class="max-w-7xl mx-auto px-5 md:px-8 pt-12">
 			<!-- ── Page header ──────────────────────────────────────────────────── -->
 			<div class="text-center mb-10">
@@ -36,7 +43,7 @@
 			</div>
 
 			<!-- ── Main card ─────────────────────────────────────────────────────── -->
-			<div class="bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden">
+			<div class="bg-white/85 backdrop-blur-md rounded-3xl border border-[#E0E6E8] shadow-lg">
 				<!-- ── IDLE / FORM state ─────────────────────────────────────────── -->
 				<template v-if="stage === 'idle' || stage === 'error'">
 					<div class="p-7 md:p-10">
