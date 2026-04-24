@@ -26,10 +26,10 @@
 			<!-- Cards -->
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
 				<article
-					v-for="domain in domains"
 					:key="domain.id"
-					class="relative rounded-3xl p-7 border shadow-sm overflow-hidden transition-all duration-300 hover:-translate-y-1"
-					:style="{ background: domain.bg, borderColor: domain.border }"
+					v-for="domain in domains"
+					:style="{ background: domain.bg }"
+					class="relative rounded-3xl p-7  shadow-sm overflow-hidden transition-all duration-300 hover:-translate-y-1"
 				>
 					<!-- subtle thatch -->
 					<div
@@ -48,20 +48,20 @@
 						<!-- Header -->
 						<div class="flex items-center gap-3 mb-5">
 							<div
-								class="w-11 h-11 rounded-xl flex items-center justify-center"
 								:style="{ background: domain.iconBg }"
+								class="w-11 h-11 rounded-xl flex items-center justify-center"
 							>
 								<Icon :name="domain.icon" class="w-7! h-7! text-gray-700" />
 							</div>
 
 							<div>
-								<h3 class="font-display font-bold text-white text-lg">
+								<h3 class="font-display font-bold text-gray-700 text-lg">
 									{{ domain.name }}
 								</h3>
 
 								<span
-									class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold mt-1"
-									:style="{ background: domain.pillBg, color: domain.pillColor }"
+									class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold mt-1 text-gray-700"
+									:style="{ background: domain.pillBg }"
 								>
 									{{ domain.count }} tools
 								</span>
@@ -69,21 +69,16 @@
 						</div>
 
 						<!-- Description -->
-						<p class="text-sm text-white/80 mb-5 leading-relaxed">
+						<p class="text-sm text-gray-800 mb-5 leading-relaxed">
 							{{ domain.desc }}
 						</p>
 
 						<!-- Tags -->
 						<div class="flex flex-wrap gap-2">
 							<span
-								v-for="tool in domain.tools"
 								:key="tool"
-								class="px-2.5 py-1 rounded-xl text-xs font-mono font-semibold border"
-								:style="{
-									background: domain.tagBg,
-									color: domain.tagColor,
-									borderColor: domain.tagBorder,
-								}"
+								v-for="tool in domain.tools"
+								class="px-2.5 py-1 rounded-xl text-xs font-semibold text-gray-700 bg-gray-100/30"
 							>
 								{{ tool }}
 							</span>
@@ -99,12 +94,12 @@
 				</p>
 			</div>
 
-			<div class="overflow-hidden relative w-full">
+			<div class="relative w-full overflow-hidden marquee-fade">
 				<div class="flex w-max gap-3 py-2 animate-marquee">
 					<span
 						v-for="(tool, i) in [...allTools, ...allTools]"
 						:key="tool + i"
-						class="px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-[#EEF5F7] text-[#455A64] border border-[#E0E6E8]"
+						class="px-2.5 py-1 rounded-xl text-xs  font-semibold bg-stone-300 text-[#455A64] border border-[#E0E6E8]"
 					>
 						{{ tool }}
 					</span>
@@ -122,13 +117,8 @@ const domains = [
 		icon: 'tabler:virus',
 		iconColor: 'text-[#1F6F78]',
 		bg: '#1F6F7899',
-		border: '#1F6F7899',
 		iconBg: 'rgba(255,255,255,0.2)',
 		pillBg: 'rgba(255,255,255,0.15)',
-		pillColor: '#E0F7FA',
-		tagBg: 'rgba(255,255,255,0.08)',
-		tagColor: '#E0F7FA',
-		tagBorder: 'rgba(255,255,255,0.2)',
 		count: 12,
 		desc:
 			'Predicts the deleteriousness of non-coding variants using ensemble models trained on known pathogenic sites, regulatory disruption, and population constraint.',
@@ -153,13 +143,8 @@ const domains = [
 		icon: 'tabler:stopwatch',
 		iconColor: 'text-[#7CB342]',
 		bg: '#7CB34299',
-		border: '#7CB34299',
 		iconBg: 'rgba(255,255,255,0.1)',
 		pillBg: 'rgba(255,255,255,0.15)',
-		pillColor: '#F1F8E9',
-		tagBg: 'rgba(255,255,255,0.08)',
-		tagColor: '#F1F8E9',
-		tagBorder: 'rgba(255,255,255,0.2)',
 		count: 6,
 		desc:
 			'Captures replication timing phase data via RepliSeq, allowing correlation of variant position with mutation rate biases across S-phase, which is relevant to somatic cancer mutation signatures.',
@@ -171,13 +156,8 @@ const domains = [
 		icon: 'tabler:leaf',
 		iconColor: 'text-[#4CAF50]',
 		bg: '#4CAF5099',
-		border: '#4CAF5099',
 		iconBg: 'rgba(255,255,255,0.1)',
 		pillBg: 'rgba(255,255,255,0.15)',
-		pillColor: '#E8F5E9',
-		tagBg: 'rgba(255,255,255,0.08)',
-		tagColor: '#E8F5E9',
-		tagBorder: 'rgba(255,255,255,0.2)',
 		count: 4,
 		desc:
 			'Measures evolutionary conservation across vertebrate species using phylogenetic models, identifying positions under purifying selection that are likely functionally constrained.',
@@ -189,13 +169,8 @@ const domains = [
 		icon: 'tabler:shield',
 		iconColor: 'text-[#455A64]',
 		bg: '#455A6499',
-		border: '#455A6499',
 		iconBg: 'rgba(255,255,255,0.1)',
 		pillBg: 'rgba(255,255,255,0.15)',
-		pillColor: '#ECEFF1',
-		tagBg: 'rgba(255,255,255,0.08)',
-		tagColor: '#ECEFF1',
-		tagBorder: 'rgba(255,255,255,0.2)',
 		count: 4,
 		desc:
 			'Evaluates the regulatory potential of non-coding positions by integrating ENCODE/Roadmap epigenomics data, transcription factor binding sites, and chromatin accessibility signals.',
@@ -216,18 +191,18 @@ const allTools = [
 	'NCER',
 	'ORION',
 	'REMM',
-	'GERP++',
-	'PhyloP_100way',
-	'PhyloP_30way',
+	'GERP',
+	'PhyloP 100way',
+	'PhyloP 30way',
 	'MACIE',
 	'FUNSEQ2',
 	'FIRE',
-	'REGULOMEDB',
-	'RepliSeq_G1b',
-	'RepliSeq_S1',
-	'RepliSeq_S2',
-	'RepliSeq_S3',
-	'RepliSeq_S4',
-	'RepliSeq_G2',
+	'RegulomeDB',
+	'RepliSeq G1b',
+	'RepliSeq S1',
+	'RepliSeq S2',
+	'RepliSeq S3',
+	'RepliSeq S4',
+	'RepliSeq G2',
 ]
 </script>
