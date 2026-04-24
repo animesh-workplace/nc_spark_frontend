@@ -14,7 +14,7 @@
 					<NuxtImg
 						src="/images/logo.png"
 						alt="NC-SPARK Logo"
-						class="w-8 h-8 transform transition-transform duration-500 ease-in-out hover:rotate-180"
+						class="w-8 h-8 transform transition-transform duration-500 ease-in-out group-hover:rotate-180"
 					/>
 					<div class="leading-none">
 						<span class="font-display font-bold text-stone-950 text-2xl tracking-tight">NC-SPARK</span>
@@ -35,11 +35,12 @@
 
 				<!-- Desktop CTA -->
 				<div class="hidden lg:flex items-center gap-3">
-					<a
-						href="#try"
+					<NuxtLink
+						to="/upload"
 						class="px-4 py-2 text-sm font-semibold text-white bg-pink-600 rounded-full hover:bg-pink-700 transition-all"
-						>Try NC-SPARK</a
 					>
+						Try NC-SPARK
+					</NuxtLink>
 				</div>
 
 				<!-- Mobile toggle -->
@@ -117,10 +118,10 @@ const scrolled = ref(false)
 const mobileOpen = ref(false)
 
 const navItems = [
-	{ label: 'Features', href: '#features' },
-	{ label: 'Scoring Domains', href: '#domains' },
-	{ label: 'Architecture', href: '#architecture' },
-	{ label: 'Tools', href: '#tools' },
+	// { label: 'Features', href: '#features' },
+	// { label: 'Scoring Domains', href: '#domains' },
+	// { label: 'Architecture', href: '#architecture' },
+	// { label: 'Tools', href: '#tools' },
 	// { label: "Publication", href: "#publication" },
 ]
 
