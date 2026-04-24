@@ -1,123 +1,119 @@
 <template>
-	<section class="py-16 bg-amber-50" id="tools" aria-labelledby="pub-heading">
-		<div class="max-w-5xl mx-auto px-5 md:px-8">
-			<!-- All tools table header -->
-			<div class="text-center mb-14 reveal">
+	<section class="py-20 relative bg-[#a8ca88]" id="tools">
+		<!-- subtle background field -->
+		<div
+			class="absolute inset-0 pointer-events-none opacity-50"
+			style="
+				background:
+				radial-gradient(circle at 20% 30%, rgba(38,198,218,0.08), transparent 50%),
+				radial-gradient(circle at 80% 70%, rgba(76,175,80,0.08), transparent 50%);
+			"
+		></div>
+
+		<div class="max-w-7xl mx-auto px-5 md:px-8 relative z-10">
+			<!-- Header -->
+			<div class="text-center mb-14">
 				<span
-					class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-stone-900 text-white text-xs font-bold tracking-widest uppercase mb-6"
+					class="inline-flex px-4 py-1.5 rounded-full bg-[#263238] text-white text-xs font-bold uppercase mb-6"
 				>
 					Integrated Tools Reference
 				</span>
+
 				<h2
-					id="pub-heading"
-					class="font-display font-black text-stone-950 mb-5 leading-tight"
+					class="font-display font-black text-[#263238] mb-5 leading-tight"
 					style="font-size: clamp(1.75rem, 3.5vw, 2.75rem)"
 				>
-					25+ tools, four domains, one interface
+					25+ tools. Four domains. One system.
 				</h2>
-				<p class="text-stone-600 max-w-xl mx-auto leading-relaxed">
-					Every tool integrated into NC-SPARK is listed below with its biological domain, score
-					directionality, and reference genome.
+
+				<p class="text-[#607D8B] max-w-xl mx-auto">
+					All integrated scoring models with domain classification and normalized interpretation
+					behavior.
 				</p>
 			</div>
 
-			<!-- Table -->
-			<div class="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm mb-20 reveal">
-				<div class="overflow-x-auto">
-					<table class="w-full text-sm" aria-label="NC-SPARK integrated tools">
-						<thead>
-							<tr class="border-b border-stone-100 bg-stone-50">
+			<!-- TABLE -->
+			<div
+				class="bg-white/90 backdrop-blur-sm rounded-3xl border border-[#E0E6E8] overflow-hidden shadow-sm"
+			>
+				<div class="overflow-x-auto max-h-[520px]">
+					<table class="w-full text-sm">
+						<!-- HEADER -->
+						<thead class="sticky top-0 bg-[#F4F8FA] border-b border-[#E0E6E8] z-10">
+							<tr>
 								<th
-									class="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-widest text-stone-500"
+									class="px-5 py-5 text-xs font-bold uppercase tracking-widest text-[#90A4AE] text-center"
 								>
 									Tool
 								</th>
 								<th
-									class="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-widest text-stone-500"
+									class="px-5 py-3 text-xs font-bold uppercase tracking-widest text-[#90A4AE] text-center"
 								>
 									Domain
 								</th>
 								<th
-									class="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-widest text-stone-500 hidden md:table-cell"
+									class="px-5 py-3 text-xs font-bold uppercase tracking-widest text-[#90A4AE] text-center hidden md:table-cell"
 								>
-									Score Direction
+									Direction
 								</th>
 								<th
-									class="text-left px-5 py-3.5 text-xs font-bold uppercase tracking-widest text-stone-500 hidden lg:table-cell"
+									class="px-5 py-3 text-xs font-bold uppercase tracking-widest text-[#90A4AE] text-center hidden lg:table-cell"
 								>
-									Notes
+									Description
 								</th>
 							</tr>
 						</thead>
+
 						<tbody>
 							<tr
 								v-for="(tool, i) in tools"
 								:key="tool.name"
-								class="border-b border-stone-50 hover:bg-stone-50 transition-colors"
-								:class="i % 2 === 0 ? 'bg-white' : 'bg-stone-50/50'"
+								class="group border-b border-[#F0F3F4] transition-all text-center"
+								:class="i % 2 === 0 ? 'bg-white' : 'bg-[#FAFCFD]'"
 							>
-								<td class="px-5 py-3">
-									<span
-										class="font-mono text-xs font-bold"
-										:style="{ color: domainColors[tool.domain] }"
-										>{{ tool.name }}</span
-									>
+								<!-- TOOL -->
+								<td
+									class="px-5 py-3 font-semibold text-xs"
+									:style="{ color: domainColors[tool.domain] }"
+								>
+									{{ tool.name }}
 								</td>
+
+								<!-- DOMAIN -->
 								<td class="px-5 py-3">
 									<span
-										class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold"
+										class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold"
 										:style="{
 											background: domainPillBg[tool.domain],
 											color: domainPillColor[tool.domain],
 										}"
-										>{{ tool.domain }}</span
 									>
-								</td>
-								<td class="px-5 py-3 hidden md:table-cell">
-									<span class="text-xs text-stone-600 flex items-center gap-1.5">
-										<svg
-											v-if="tool.dir === 'higher'"
-											width="12"
-											height="12"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="#16a34a"
-											stroke-width="2.5"
-										>
-											<path d="M12 19V5M5 12l7-7 7 7" />
-										</svg>
-										<svg
-											v-else-if="tool.dir === 'lower'"
-											width="12"
-											height="12"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="#dc2626"
-											stroke-width="2.5"
-										>
-											<path d="M12 5v14M5 12l7 7 7-7" />
-										</svg>
-										<svg
-											v-else
-											width="12"
-											height="12"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="#a8a29e"
-											stroke-width="2.5"
-										>
-											<path d="M8 12h8" />
-										</svg>
-										{{
-											tool.dir === 'higher'
-												? 'Higher = more deleterious'
-												: tool.dir === 'lower'
-												? 'Lower = more conserved'
-												: 'Probability score'
-										}}
+										{{ tool.domain }}
 									</span>
 								</td>
-								<td class="px-5 py-3 text-xs text-stone-500 hidden lg:table-cell">
+
+								<!-- DIRECTION -->
+								<td class="px-5 py-3 hidden md:table-cell text-xs text-[#607D8B]">
+									<span class="flex items-center justify-center gap-1.5">
+										<span v-if="tool.dir === 'higher'" class="text-[#1F6F78] font-semibold">
+											↑ Higher = deleterious
+										</span>
+
+										<span
+											v-else-if="tool.dir === 'lower'"
+											class="text-[#7CB342] font-semibold"
+										>
+											↓ Lower = conserved
+										</span>
+
+										<span v-else class="text-[#455A64] font-semibold">
+											Probability
+										</span>
+									</span>
+								</td>
+
+								<!-- DESCRIPTION -->
+								<td class="px-5 py-3 text-xs text-[#90A4AE] hidden lg:table-cell">
 									{{ tool.note }}
 								</td>
 							</tr>
@@ -129,24 +125,26 @@
 	</section>
 </template>
 
-<script setup lang="ts">
-const domainColors: Record<string, string> = {
-	pathogenicity: '#be123c',
-	conservation: '#166534',
-	regulatory: '#5b21b6',
-	replication: '#92400e',
+<script setup>
+const domainColors = {
+	pathogenicity: '#1F6F78',
+	conservation: '#4CAF50',
+	regulatory: '#455A64',
+	replication: '#7CB342',
 }
-const domainPillBg: Record<string, string> = {
-	pathogenicity: '#fee2e2',
-	conservation: '#dcfce7',
-	regulatory: '#ede9fe',
-	replication: '#fef3c7',
+
+const domainPillBg = {
+	pathogenicity: '#1F6F781A',
+	conservation: '#4CAF501A',
+	regulatory: '#455A641A',
+	replication: '#7CB3421A',
 }
-const domainPillColor: Record<string, string> = {
-	pathogenicity: '#991b1b',
-	conservation: '#14532d',
-	regulatory: '#4c1d95',
-	replication: '#78350f',
+
+const domainPillColor = {
+	pathogenicity: '#1F6F78',
+	conservation: '#4CAF50',
+	regulatory: '#455A64',
+	replication: '#7CB342',
 }
 
 const tools = [
@@ -231,19 +229,19 @@ const tools = [
 		note: 'Genomic evolutionary rate profiling (rejected subs.)',
 	},
 	{
-		name: 'PhyloP_100way',
+		name: 'PhyloP 100way',
 		domain: 'conservation',
 		dir: 'higher',
 		note: '100-vertebrate species phylogenetic conservation',
 	},
 	{
-		name: 'PhyloP_30way',
+		name: 'PhyloP 30way',
 		domain: 'conservation',
 		dir: 'higher',
 		note: '30-mammal phylogenetic conservation (UCSC)',
 	},
 	{
-		name: 'MACIE_CONSERVED',
+		name: 'MACIE CONSERVED',
 		domain: 'conservation',
 		dir: 'higher',
 		note: 'MACIE conservation component score',
@@ -268,44 +266,44 @@ const tools = [
 		note: 'Lower rank = higher regulatory evidence (1a–7)',
 	},
 	{
-		name: 'MACIE_REGULATORY',
+		name: 'MACIE REGULATORY',
 		domain: 'regulatory',
 		dir: 'higher',
 		note: 'MACIE regulatory component score',
 	},
 	// Replication Timing
 	{
-		name: 'RepliSeq_G1b',
+		name: 'RepliSeq G1b',
 		domain: 'replication',
 		dir: 'prob',
 		note: 'Replication timing phase G1b (early replication)',
 	},
 	{
-		name: 'RepliSeq_S1',
+		name: 'RepliSeq S1',
 		domain: 'replication',
 		dir: 'prob',
 		note: 'Replication timing phase S1',
 	},
 	{
-		name: 'RepliSeq_S2',
+		name: 'RepliSeq S2',
 		domain: 'replication',
 		dir: 'prob',
 		note: 'Replication timing phase S2',
 	},
 	{
-		name: 'RepliSeq_S3',
+		name: 'RepliSeq S3',
 		domain: 'replication',
 		dir: 'prob',
 		note: 'Replication timing phase S3',
 	},
 	{
-		name: 'RepliSeq_S4',
+		name: 'RepliSeq S4',
 		domain: 'replication',
 		dir: 'prob',
 		note: 'Replication timing phase S4',
 	},
 	{
-		name: 'RepliSeq_G2',
+		name: 'RepliSeq G2',
 		domain: 'replication',
 		dir: 'prob',
 		note: 'Replication timing phase G2 (late replication)',
