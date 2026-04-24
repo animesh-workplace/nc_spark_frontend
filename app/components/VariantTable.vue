@@ -118,9 +118,6 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import GeneAnnotationCell from '~/components/GeneAnnotationCell.vue'
-
 const props = defineProps({
 	loading: { type: Boolean, default: false },
 	data: {
