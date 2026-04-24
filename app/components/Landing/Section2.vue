@@ -1,5 +1,5 @@
 <template>
-	<section class="pt-24 bg-[#F8FBFC]">
+	<section class="py-12 bg-[#F8FBFC]">
 		<div class="max-w-7xl mx-auto px-5 md:px-8">
 			<!-- Header stays same -->
 			<div class="text-center mb-16">
