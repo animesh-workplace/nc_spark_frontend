@@ -70,7 +70,7 @@
 
 		<!-- 🔥 LIVE TABLE (REPLACES TERMINAL) -->
 		<LandingLiveTable />
-		<div class=" h-20 bg-linear-to-b from-transparent to-[#EEF5F7]" />
+		<div class="h-12 bg-linear-to-b from-transparent to-[#EEF5F7]" />
 	</section>
 </template>
 
