@@ -2,6 +2,13 @@
 	<div class="min-h-screen bg-white-50 pt-16 pb-16">
 		<div class="max-w-full mx-auto px-5 md:px-8 pt-12">
 			<section>
+				<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 max-w-4xl mx-auto w-full">
+					<div class="bg-white border border-[#E0E6E8] rounded-2xl px-5 py-4 text-center shadow-sm">
+						<p class="font-display font-black text-2xl md:text-3xl text-[#263238] mb-0.5"></p>
+						<p class="text-xs font-semibold text-[#607D8B] uppercase tracking-wider"></p>
+					</div>
+				</div>
+
 				<div class="my-5">
 					<!-- Switcher -->
 					<div class="flex justify-start mb-3">
