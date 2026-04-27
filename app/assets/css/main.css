@@ -10,6 +10,9 @@
 		--p-skeleton-background: rgba(31, 111, 120, 0.2);
 		--p-skeleton-animation-background: #e2e8f0;
 	}
+	.p-selectbutton {
+		--p-selectbutton-border-radius: 16px;
+	}
 }
 
 .thatch-overlay {
