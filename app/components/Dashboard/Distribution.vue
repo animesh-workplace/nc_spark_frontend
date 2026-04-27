@@ -1,18 +1,27 @@
 <template>
 	<section>
-		<div class="flex justify-start mb-3">
-			<SelectButton
-				option-label="label"
-				option-value="value"
-				:allow-empty="false"
-				v-model="selectedView"
-				:options="viewOptions"
-			>
-				<template #option="{ option }">
-					<Icon :name="option.icon" class="w-5! h-5! text-gray-500 mr-2" />
-					{{ option.label }}
-				</template>
-			</SelectButton>
+		<div class="flex justify-center mb-3">
+			<div class="max-w-lg w-full">
+				<SelectButton
+					fluid
+					option-label="label"
+					option-value="value"
+					:allow-empty="false"
+					v-model="selectedView"
+					:options="viewOptions"
+					:pt="{
+						pcToggleButton: ({ props }) => ({
+							content: '!rounded-xl !transition-all !duration-200',
+							root: '!bg-[#1F6F78]/35 !border-transparent !text-slate-800 hover:!bg-[#1F6F78]/55',
+						}),
+					}"
+				>
+					<template #option="{ option }">
+						<Icon :name="option.icon" class="w-5! h-5! mr-2" />
+						{{ option.label }}
+					</template>
+				</SelectButton>
+			</div>
 		</div>
 
 		<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-9 gap-3 mb-16 mx-auto w-full">
