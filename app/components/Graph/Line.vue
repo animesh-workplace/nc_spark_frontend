@@ -30,21 +30,12 @@ const chartOption = computed(() => {
 	const xData = bins.map(b => +((b.bin_start + b.bin_end) / 2).toFixed(4))
 	const yData = bins.map(b => b.count)
 
-	// Find closest x tick to the marker value
-	const markerVal = props.markerValue
-	const closestX =
-		markerVal !== null
-			? xData.reduce(
-					(prev, curr) => (Math.abs(curr - markerVal) < Math.abs(prev - markerVal) ? curr : prev),
-					xData[0], // ← initial value prevents crash on single-element arrays
-			  )
-			: null
-
 	return {
-		backgroundColor: 'transparent',
 		tooltip: {
-			trigger: 'axis',
 			confine: true,
+			trigger: 'item',
+			borderColor: '#94a3b8',
+			textStyle: { fontSize: 14, fontFamily: 'Lexend Deca' },
 			formatter: params => {
 				const idx = params[0].dataIndex
 				const bin = bins[idx]
