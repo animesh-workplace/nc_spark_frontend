@@ -5,6 +5,13 @@
 	--font-display: 'Fraunces', serif;
 }
 
+@layer base {
+	.p-skeleton {
+		--p-skeleton-background: rgba(31, 111, 120, 0.2);
+		--p-skeleton-animation-background: #e2e8f0;
+	}
+}
+
 .thatch-overlay {
 	position: absolute;
 	inset: 0;
