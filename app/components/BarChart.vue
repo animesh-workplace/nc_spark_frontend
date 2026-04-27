@@ -22,6 +22,14 @@ const props = defineProps({
 
 const chartOption = ref({
 	series: [],
+	legend: {
+		show: true,
+		textStyle: {
+			fontFamily: 'Lexend Deca, sans-serif',
+			fontSize: 12,
+			color: '#607D8B',
+		},
+	},
 	grid: {
 		top: '0%',
 		bottom: '0%',
