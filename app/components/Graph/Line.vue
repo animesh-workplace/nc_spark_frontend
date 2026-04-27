@@ -44,7 +44,7 @@ const chartOption = computed(() => {
 				}</b>`
 			},
 		},
-		grid: { top: 1, right: 1, bottom: 5, left: 1 },
+		grid: { top: 4, right: 0, bottom: 5, left: 0 },
 		xAxis: {
 			show: false,
 			data: xData,
