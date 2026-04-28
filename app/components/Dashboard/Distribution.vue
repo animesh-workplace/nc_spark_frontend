@@ -24,7 +24,7 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-9 gap-3 mb-16 mx-auto w-full">
+		<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-9 gap-3 mx-auto w-full">
 			<div v-for="chartData in histogramData" :key="chartData.score">
 				<div v-if="isLoading">
 					<Skeleton height="8rem" borderRadius="16px" />
