@@ -32,7 +32,7 @@
 
 				<div v-else>
 					<div class="bg-white border border-[#E0E6E8] rounded-2xl pt-2 pb-2 shadow-sm">
-						<p class="font-display font-bold text-md text-gray-500 mb-0.5 px-2">
+						<p class="font-sans font-bold text-md text-gray-500 mb-0.5 px-2">
 							{{ score_label[chartData.score] || chartData.score }}
 						</p>
 						<GraphHistogram v-if="selectedView === 'histogram'" :histogramData="chartData.bins" />
