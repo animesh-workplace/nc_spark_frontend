@@ -33,7 +33,7 @@ const chartOption = computed(() => {
 	return {
 		tooltip: {
 			confine: true,
-			trigger: 'item',
+			trigger: 'axis',
 			borderColor: '#94a3b8',
 			textStyle: { fontSize: 14, fontFamily: 'Lexend Deca' },
 			formatter: params => {
