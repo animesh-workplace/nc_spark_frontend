@@ -29,6 +29,7 @@
 			<GraphBar :plotData="variantsPerChr" showAll />
 			<GraphTrinucleotideContext class="col-span-3" />
 			<GraphBar :plotData="snvChange" showAll class="col-span-2" />
+			<GraphPie class="col-span-2" />
 		</div>
 	</section>
 </template>
