@@ -26,12 +26,36 @@ const GRID_LEFT = '50px'
 const GRID_RIGHT = '8px'
 
 const MUTATION_TYPES = [
-	{ label: 'C>A', color: '#1EBFF0', textColor: '#0f172a' },
-	{ label: 'C>G', color: '#050708', textColor: '#ffffff' },
-	{ label: 'C>T', color: '#E62725', textColor: '#ffffff' },
-	{ label: 'T>A', color: '#CBCACB', textColor: '#1a1a1a' },
-	{ label: 'T>C', color: '#A1CE63', textColor: '#1a1a1a' },
-	{ label: 'T>G', color: '#ECC6C5', textColor: '#1a1a1a' },
+	{
+		label: 'C>A',
+		color: '#2A9D8F', // teal-green (distinct from main teal)
+		textColor: '#ffffff',
+	},
+	{
+		label: 'C>G',
+		color: '#264653', // deep slate-blue
+		textColor: '#ffffff',
+	},
+	{
+		label: 'C>T',
+		color: '#E76F51', // coral (replaces red but softer)
+		textColor: '#ffffff',
+	},
+	{
+		label: 'T>A',
+		color: '#E9C46A', // muted amber (visible, not white)
+		textColor: '#1a1a1a',
+	},
+	{
+		label: 'T>C',
+		color: '#6ABF69', // fresh green
+		textColor: '#0f172a',
+	},
+	{
+		label: 'T>G',
+		color: '#8D99AE', // cool gray-blue
+		textColor: '#0f172a',
+	},
 ]
 
 const BASES = ['A', 'C', 'G', 'T']
