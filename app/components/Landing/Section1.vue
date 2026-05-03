@@ -37,7 +37,7 @@
 			<!-- CTAs -->
 			<div class="flex flex-wrap justify-center gap-3 mb-14">
 				<NuxtLink
-					to="/"
+					to="/upload"
 					class="px-8 py-3.5 text-base font-semibold text-white bg-[#26C6DA] rounded-full hover:bg-[#1FA4B8] transition-all shadow-lg shadow-[#26C6DA]/30"
 				>
 					Launch Portal
