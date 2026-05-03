@@ -21,7 +21,9 @@
 
 		<section class="mx-auto px-5 md:px-8">
 			<DashboardZoneA class="mb-20" />
-			<DashboardDistribution2 class="mb-10" />
+			<DashboardZoneB class="mb-20" />
+
+			<!-- <DashboardDistribution2 class="mb-10" />
 			<DashboardDistribution class="mb-10" />
 			<ReplicationRadarChart :plotData="replicationData" />
 			<div class="my-5" v-if="tableData?.results?.length || false">
@@ -38,7 +40,7 @@
 					:results="topVariantsData.results"
 					:cross-group-hits="topVariantsData.cross_group_hits"
 				/>
-			</div>
+			</div> -->
 		</section>
 	</main>
 </template>
