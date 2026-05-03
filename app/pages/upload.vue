@@ -165,6 +165,7 @@ onMounted(async () => {
 
 	pondInstance = create(pondEl.value, {
 		allowMultiple: false,
+		credits: false,
 		acceptedFileTypes: ['text/plain', 'text/tab-separated-values', 'text/csv', 'application/octet-stream', ''],
 		labelIdle:
 			'<span class="font-semibold text-stone-700">Drop your file here</span> <span class="text-stone-400">or</span> <span class="text-[#1F6F78] font-semibold cursor-pointer">browse</span>',
