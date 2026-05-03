@@ -65,15 +65,6 @@
 				<p>
 					© {{ new Date().getFullYear() }} NC-SPARK · BRIC-NIBMG · Kalyani, India. All rights reserved.
 				</p>
-				<div class="flex items-center gap-2 font-mono text-[10px] text-stone-600">
-					<span class="px-2 py-1 bg-stone-800 rounded">ClickHouse</span>
-					<span>·</span>
-					<span class="px-2 py-1 bg-stone-800 rounded">FastAPI</span>
-					<span>·</span>
-					<span class="px-2 py-1 bg-stone-800 rounded">Nuxt</span>
-					<span>·</span>
-					<span class="px-2 py-1 bg-stone-800 rounded">GRCh38</span>
-				</div>
 			</div>
 		</div>
 	</footer>
