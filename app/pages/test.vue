@@ -3,6 +3,7 @@
 		<DashboardZoneA class="mb-20" />
 		<DashboardDistribution2 class="mb-10" />
 		<DashboardDistribution class="mb-10" />
+		<ReplicationRadarChart :plotData="replicationData" />
 		<div class="my-5" v-if="tableData?.results?.length || false">
 			<VariantTable :data="tableData" :loading="isLoading" @sort="handleTableSort" @page="handleTablePage" />
 		</div>
@@ -18,15 +19,13 @@
 
 <script setup>
 import { useGeneAPI } from '@/api/GeneAPI'
-const { FilterAPI, TopVariantsAPI } = useGeneAPI()
+const { FilterAPI, TopVariantsAPI, ReplicationAPI } = useGeneAPI()
 
-const tableData = ref({ results: [], total_results: 0 })
-const isLoading = ref(true)
 const currentPage = ref(1)
-const topVariantsData = ref({
-	results: {},
-	cross_group_hits: [],
-})
+const isLoading = ref(true)
+const tableData = ref({ results: [], total_results: 0 })
+const topVariantsData = ref({ results: {}, cross_group_hits: [] })
+const replicationData = ref({ stats: [], indicator: [], series_data: [] })
 
 const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 	isLoading.value = true
@@ -60,6 +59,17 @@ const FetchData2 = async () => {
 	}
 }
 
+const FetchData3 = async () => {
+	try {
+		const response = await ReplicationAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d')
+		replicationData.value = response
+	} catch (error) {
+		console.error('Error fetching data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+
 const handleTableSort = event => {
 	// Optional: refetch with server-side sort instead of relying on client sort
 	// FetchData(currentPage.value, pageSize.value, { sort_field: event.sortField, sort_order: event.sortOrder })
@@ -75,6 +85,7 @@ onMounted(() => {
 	nextTick(async () => {
 		await FetchData()
 		await FetchData2()
+		await FetchData3()
 	})
 })
 </script>
