@@ -1,18 +1,15 @@
-<!-- VariantGroupTables.vue -->
 <template>
-	<div class="w-full flex flex-col gap-4 p-4 font-['Lexend_Deca']">
+	<div class="w-full flex flex-col gap-4 p-4">
 		<!-- Legend -->
 		<div class="flex items-center gap-2.5">
-			<span
-				class="inline-block w-3.5 h-3.5 rounded-sm bg-amber-100 border-2 border-amber-400 flex-shrink-0"
-			/>
+			<span class="inline-block w-3.5 h-3.5 rounded-sm bg-amber-100 border-2 border-amber-400 shrink-0" />
 			<span class="text-xs text-slate-500 font-medium tracking-wide">
 				Highlighted rows indicate cross-group hits — variant appears in multiple ranking groups
 			</span>
 		</div>
 
 		<!-- 4 Tables Grid -->
-		<div class="grid grid-cols-4 gap-3 items-stretch">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-stretch">
 			<div
 				v-for="(groupData, groupKey) in results"
 				:key="groupKey"
@@ -20,13 +17,13 @@
 			>
 				<!-- Group Header -->
 				<div
-					class="flex items-center justify-between gap-2 px-3 py-2.5 bg-slate-50 border-b border-slate-200 flex-shrink-0"
+					class="flex items-center justify-between gap-2 px-3 py-2.5 bg-slate-50 border-b border-slate-200 shrink-0"
 				>
-					<span class="text-sm font-semibold text-slate-700 capitalize tracking-wide">
+					<span class="text-base font-semibold text-slate-700 capitalize tracking-wide">
 						{{ formatGroupName(groupData.group) }}
 					</span>
 					<span
-						class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-indigo-50 text-indigo-600 border border-indigo-100 whitespace-nowrap"
+						class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-50 text-[#1F6F78] border border-indigo-100 whitespace-nowrap"
 					>
 						{{ groupData.rank_by }}
 					</span>
@@ -40,7 +37,7 @@
 						size="small"
 						stripedRows
 						showGridlines
-						class="text-xs h-full"
+						class="text-sm h-full"
 					>
 						<!-- Rank -->
 						<Column
@@ -48,11 +45,11 @@
 							style="width: 2rem; text-align: center"
 							:pt="{
 								headerCell:
-									'px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200 text-center',
+									'px-2 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200 text-center',
 							}"
 						>
 							<template #body="{ index }">
-								<span class="text-[11px] font-bold text-slate-400 tabular-nums">
+								<span class="text-xs font-bold text-slate-400 tabular-nums">
 									{{ index + 1 }}
 								</span>
 							</template>
@@ -65,15 +62,15 @@
 							style="min-width: 120px"
 							:pt="{
 								headerCell:
-									'px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
+									'px-2 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
 							}"
 						>
 							<template #body="{ data }">
 								<div class="flex items-center gap-1.5">
-									<span class="text-[11px] text-slate-700">{{ data.variant }}</span>
+									<span class="text-xs text-slate-700">{{ data.variant }}</span>
 									<span
 										v-if="isCrossHit(data.variant)"
-										class="inline-flex items-center justify-center w-4 h-4 rounded-full text-[9px] font-bold bg-amber-400 text-white cursor-default flex-shrink-0"
+										class="inline-flex items-center justify-center w-4 h-4 rounded-full text-[9px] font-bold bg-amber-400 text-white cursor-default shrink-0"
 										v-tooltip.top="getCrossHitTooltip(data.variant)"
 									>
 										{{ getCrossHitCount(data.variant) }}
@@ -89,13 +86,11 @@
 							style="width: 64px; text-align: right"
 							:pt="{
 								headerCell:
-									'px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200 text-right',
+									'px-2 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200 text-right',
 							}"
 						>
 							<template #body="{ data }">
-								<span
-									class="text-[11px] font-semibold tabular-nums text-indigo-600 block text-right"
-								>
+								<span class="text-xs font-semibold tabular-nums text-[#1F6F78] block text-right">
 									{{ data.group_score.toFixed(3) }}
 								</span>
 							</template>
@@ -106,7 +101,7 @@
 							header="Gene"
 							:pt="{
 								headerCell:
-									'px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
+									'px-2 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
 							}"
 						>
 							<template #body="{ data }">
@@ -128,14 +123,14 @@
 		<div class="rounded-xl border border-slate-200 overflow-hidden shadow-sm bg-white">
 			<div class="flex items-center gap-3 px-4 py-3 bg-slate-50 border-b border-slate-200">
 				<div class="flex items-center gap-2">
-					<span class="inline-block w-2 h-6 rounded-full bg-indigo-500" />
+					<span class="inline-block w-2 h-6 rounded-full bg-[#1F6F78]" />
 					<span class="text-sm font-semibold text-slate-700 tracking-wide">Cross-Group Hits</span>
 				</div>
 				<span class="text-xs text-slate-400 font-normal">
 					Variants appearing in multiple ranking groups
 				</span>
 				<span
-					class="ml-auto inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-50 text-indigo-600 border border-indigo-100"
+					class="ml-auto inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-50 text-[#1F6F78] border border-indigo-100"
 				>
 					{{ crossGroupHits.length }} variants
 				</span>
@@ -146,7 +141,7 @@
 				:rowClass="row => (row.group_count >= 3 ? 'cross-hit-row-high' : 'cross-hit-row-low')"
 				size="small"
 				showGridlines
-				class="text-xs"
+				class="text-sm"
 			>
 				<Column
 					field="variant"
@@ -154,11 +149,11 @@
 					style="min-width: 200px"
 					:pt="{
 						headerCell:
-							'px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
+							'px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
 					}"
 				>
 					<template #body="{ data }">
-						<span class="text-[11px] text-slate-700">{{ data.variant }}</span>
+						<span class="text-sm text-slate-700">{{ data.variant }}</span>
 					</template>
 				</Column>
 
@@ -166,7 +161,7 @@
 					header="Nearest Gene"
 					:pt="{
 						headerCell:
-							'px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
+							'px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
 					}"
 				>
 					<template #body="{ data }">
@@ -185,7 +180,7 @@
 					header="Appears In"
 					:pt="{
 						headerCell:
-							'px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
+							'px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200',
 					}"
 				>
 					<template #body="{ data }">
@@ -208,13 +203,13 @@
 					style="width: 80px; text-align: center"
 					:pt="{
 						headerCell:
-							'px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200 text-center',
+							'px-3 py-2 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-white border-b border-slate-200 text-center',
 					}"
 				>
 					<template #body="{ data }">
 						<div class="flex justify-center">
 							<span
-								class="inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold"
+								class="inline-flex items-center justify-center w-6 h-6 rounded-full text-sm font-bold"
 								:class="
 									data.group_count >= 3
 										? 'bg-red-100 text-red-600 ring-1 ring-red-300'
