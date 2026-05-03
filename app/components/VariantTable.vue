@@ -1,23 +1,39 @@
 <template>
 	<div>
 		<!-- Stat Mode Selector -->
-		<div class="flex items-center gap-3 mb-3">
-			<span class="text-sm font-medium text-surface-600">Score Summary:</span>
-			<SelectButton
+		<div class="flex items-center justify-center gap-3 mb-3">
+			<!-- <span class="text-sm font-medium text-surface-600">Score Summary:</span> -->
+			<!-- <SelectButton
 				v-model="statMode"
 				option-label="label"
 				option-value="value"
 				:allow-empty="false"
 				:options="statOptions"
-			/>
+			/> -->
+			<div class="max-w-lg w-full">
+				<SelectButton
+					fluid
+					v-model="statMode"
+					option-label="label"
+					option-value="value"
+					:allow-empty="false"
+					:options="statOptions"
+					:pt="{
+						pcToggleButton: ({ props }) => ({
+							content: '!rounded-xl !transition-all !duration-200',
+							root: '!bg-[#1F6F78]/35 !border-transparent !text-slate-800 hover:!bg-[#1F6F78]/55',
+						}),
+					}"
+				/>
+			</div>
 		</div>
+		<!-- class="p-1" -->
 
 		<DataTable
 			lazy
 			rowHover
 			paginator
 			scrollable
-			class="p-1"
 			stripedRows
 			size="small"
 			showGridlines
@@ -29,6 +45,7 @@
 			:value="localResults"
 			:totalRecords="data.total_results"
 			:rowsPerPageOptions="[20, 50, 100, 200, 500]"
+			class="min-w-[900px] rounded-2xl overflow-hidden border border-[#E0E6E8] bg-white/80 backdrop-blur-sm transition-opacity duration-500"
 		>
 			<Column
 				sortable
@@ -37,8 +54,38 @@
 				:header="col.header"
 				:frozen="col.frozen"
 				v-for="col of columns"
-				:pt="{ columnHeaderContent: '!justify-center' }"
+				:pt="{ columnHeaderContent: '!justify-center !p-2' }"
 			>
+				<template #header>
+					<template v-if="col.field === 'pathogenicity'">
+						<div class="flex items-center gap-2 justify-center">
+							<Icon name="tabler:virus" class="text-[#1F6F78]" />
+							<span class="font-bold">Pathogenicity</span>
+						</div>
+					</template>
+
+					<template v-if="col.field === 'conservation'">
+						<div class="flex items-center gap-2 justify-center">
+							<Icon name="tabler:leaf" class="text-[#4CAF50]" />
+							<span class="font-bold">Conservation</span>
+						</div>
+					</template>
+
+					<template v-if="col.field === 'regulatory'">
+						<div class="flex items-center gap-2 justify-center">
+							<Icon name="tabler:shield" class="text-[#455A64]" />
+							<span class="font-bold">Regulatory</span>
+						</div>
+					</template>
+
+					<template v-if="col.field === 'replication_timing'">
+						<div class="flex items-center gap-2 justify-center">
+							<Icon name="tabler:stopwatch" class="text-[#7CB342]" />
+							<span class="font-bold">Replication Timing</span>
+						</div>
+					</template>
+				</template>
+
 				<template #body="slotProps">
 					<!-- Nearest Gene -->
 					<template v-if="col.field === 'nearest_gene'">
@@ -189,10 +236,10 @@ const score_groups = {
 const columns = [
 	{ field: 'variant', header: 'Variant', frozen: false },
 	{ field: 'nearest_gene', header: 'Nearest Gene', frozen: false },
-	{ field: 'pathogenicity', header: 'Pathogenicity', frozen: false },
-	{ field: 'conservation', header: 'Conservation', frozen: false },
-	{ field: 'regulatory', header: 'Regulatory', frozen: false },
-	{ field: 'replication_timing', header: 'Replication Timing', frozen: false },
+	{ field: 'pathogenicity', header: '', frozen: false },
+	{ field: 'conservation', header: '', frozen: false },
+	{ field: 'regulatory', header: '', frozen: false },
+	{ field: 'replication_timing', header: '', frozen: false },
 ]
 
 const transformRow = row => ({
