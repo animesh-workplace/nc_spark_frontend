@@ -59,7 +59,7 @@
 				<div class="flex justify-center mb-4 font-semibold text-lg text-gray-700">
 					Transition vs Transversion Ratio (Ti/Tv)
 				</div>
-				<GraphPie />
+				<GraphPie :plotData="titvData" />
 			</div>
 		</div>
 	</section>
@@ -67,7 +67,7 @@
 
 <script setup>
 import { useGeneAPI } from '@/api/GeneAPI'
-const { VariantsPerChromosomeAPI, SNVChangeAPI, TrinucleotideAPI } = useGeneAPI()
+const { VariantsPerChromosomeAPI, SNVChangeAPI, TrinucleotideAPI, TiTvAPI } = useGeneAPI()
 
 const selectedView = ref('count')
 const viewOptions = ref([
@@ -79,13 +79,13 @@ const isLoading = ref(true)
 const snvChange = ref({ categories: [], data: [[]] })
 const variantsPerChr = ref({ categories: [], data: [[]] })
 const trinucleotideData = ref({ categories: [], data: [[]] })
+const titvData = ref({ categories: [], data: [[]], ti_count: 0, tv_count: 0, titv_ratio: 0 })
 
 const FetchData = async () => {
 	try {
 		const response = await VariantsPerChromosomeAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d', selectedView.value)
 		variantsPerChr.value.categories = response.categories.map(chrom => chrom.replace('chr', ''))
 		variantsPerChr.value.data = response.data
-		console.log('Fetched data:', variantsPerChr.value)
 	} catch (error) {
 		console.error('Error fetching data:', error)
 	} finally {
@@ -98,7 +98,6 @@ const FetchData2 = async () => {
 		const response = await SNVChangeAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d', selectedView.value)
 		snvChange.value.categories = response.categories.map(chrom => chrom.replace('chr', ''))
 		snvChange.value.data = response.data
-		console.log('Fetched data:', snvChange.value)
 	} catch (error) {
 		console.error('Error fetching data:', error)
 	} finally {
@@ -109,11 +108,20 @@ const FetchData2 = async () => {
 const FetchData3 = async () => {
 	try {
 		const response = await TrinucleotideAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d', selectedView.value)
-		trinucleotideData.value.categories = response.categories
-		trinucleotideData.value.data = response.data
-		console.log('Fetched trinucleotide data:', trinucleotideData.value)
+		trinucleotideData.value = response
 	} catch (error) {
 		console.error('Error fetching trinucleotide data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+
+const FetchData4 = async () => {
+	try {
+		const response = await TiTvAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d', selectedView.value)
+		titvData.value = response
+	} catch (error) {
+		console.error('Error fetching Ti/Tv data:', error)
 	} finally {
 		isLoading.value = false
 	}
@@ -123,6 +131,7 @@ const updateCharts = async () => {
 	await FetchData()
 	await FetchData2()
 	await FetchData3()
+	await FetchData4()
 }
 
 onMounted(async () => {
@@ -130,6 +139,7 @@ onMounted(async () => {
 	await FetchData()
 	await FetchData2()
 	await FetchData3()
+	await FetchData4()
 	isLoading.value = false
 })
 </script>
