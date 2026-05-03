@@ -69,9 +69,9 @@
 
 <script setup>
 const stats = [
-	{ value: '8B+', label: 'Pre-annotated rows' },
+	{ value: '16B+', label: 'Pre-annotated rows' },
 	{ value: '25+', label: 'Integrated tools' },
-	{ value: '<50ms', label: 'Median query latency' },
+	{ value: '<100ms', label: 'Median query latency' },
 	{ value: '4', label: 'Biological domains' },
 ]
 
