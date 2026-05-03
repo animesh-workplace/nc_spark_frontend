@@ -1,6 +1,10 @@
 <!-- GeneCell.vue -->
 <template>
-	<div class="relative inline-flex items-center" @mouseenter="showTooltip" @mouseleave="hideTooltip">
+	<div
+		class="relative inline-flex items-center font-[Lexend Deca]"
+		@mouseenter="showTooltip"
+		@mouseleave="hideTooltip"
+	>
 		<div v-if="firstGene" class="flex items-center gap-1 cursor-default">
 			<span
 				class="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0"
