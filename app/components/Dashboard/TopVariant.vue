@@ -19,8 +19,8 @@
 				<div
 					class="flex items-center justify-between gap-2 px-3 py-2.5 bg-slate-50 border-b border-slate-200 shrink-0"
 				>
-					<span class="text-base font-semibold text-slate-700 capitalize tracking-wide">
-						{{ formatGroupName(groupData.group) }}
+					<span class="text-base font-semibold text-slate-700 tracking-wide">
+						Top 10 variants in {{ formatGroupName(groupData.group) }}
 					</span>
 					<span
 						class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-50 text-[#1F6F78] border border-indigo-100 whitespace-nowrap"
