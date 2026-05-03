@@ -1,6 +1,13 @@
 <template>
 	<section>
-		<div class="flex justify-center mb-3">
+		<div
+			class="flex gap-4 items-start sm:items-center px-4 py-5 mb-12 text-sm text-white rounded-2xl bg-[#1F6F78]"
+		>
+			<Icon name="tabler:circle-letter-a-filled" class="w-7! h-7!" />
+			<p><span class="font-bold text-xl font-display">Genomic landscape overview</span></p>
+		</div>
+
+		<div class="flex justify-center mt-3 mb-16">
 			<div class="max-w-lg w-full">
 				<SelectButton
 					fluid
@@ -25,18 +32,42 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-4 gap-2">
-			<GraphTrinucleotideContext class="col-span-4 mb-4" />
-			<GraphBar :plotData="variantsPerChr" showAll />
-			<GraphBar :plotData="snvChange" showAll class="col-span-2" />
-			<GraphPie />
+		<div class="grid grid-cols-4 gap-y-6 gap-x-2">
+			<div class="col-span-4">
+				<div class="flex justify-center mb-4 font-semibold text-lg text-gray-700">
+					Distribution of substitutions across trinucleotide sequence contexts
+					<!-- (SBS96 signature) -->
+				</div>
+				<GraphTrinucleotideContext :plotData="trinucleotideData" />
+			</div>
+
+			<div>
+				<div class="flex justify-center mb-4 font-semibold text-lg text-gray-700">
+					Variant distribution across chromosomes
+				</div>
+				<GraphBar :plotData="variantsPerChr" showAll />
+			</div>
+
+			<div class="col-span-2">
+				<div class="flex justify-center mb-4 font-semibold text-lg text-gray-700">
+					Single Nucleotide Variant (SNV) Substitution Profile
+				</div>
+				<GraphBar :plotData="snvChange" showAll />
+			</div>
+
+			<div>
+				<div class="flex justify-center mb-4 font-semibold text-lg text-gray-700">
+					Transition vs Transversion Ratio (Ti/Tv)
+				</div>
+				<GraphPie />
+			</div>
 		</div>
 	</section>
 </template>
 
 <script setup>
 import { useGeneAPI } from '@/api/GeneAPI'
-const { VariantsPerChromosomeAPI, SNVChangeAPI } = useGeneAPI()
+const { VariantsPerChromosomeAPI, SNVChangeAPI, TrinucleotideAPI } = useGeneAPI()
 
 const selectedView = ref('count')
 const viewOptions = ref([
@@ -47,6 +78,7 @@ const viewOptions = ref([
 const isLoading = ref(true)
 const snvChange = ref({ categories: [], data: [[]] })
 const variantsPerChr = ref({ categories: [], data: [[]] })
+const trinucleotideData = ref({ categories: [], data: [[]] })
 
 const FetchData = async () => {
 	try {
@@ -74,15 +106,30 @@ const FetchData2 = async () => {
 	}
 }
 
+const FetchData3 = async () => {
+	try {
+		const response = await TrinucleotideAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d', selectedView.value)
+		trinucleotideData.value.categories = response.categories
+		trinucleotideData.value.data = response.data
+		console.log('Fetched trinucleotide data:', trinucleotideData.value)
+	} catch (error) {
+		console.error('Error fetching trinucleotide data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+
 const updateCharts = async () => {
 	await FetchData()
 	await FetchData2()
+	await FetchData3()
 }
 
 onMounted(async () => {
 	await nextTick()
 	await FetchData()
 	await FetchData2()
+	await FetchData3()
 	isLoading.value = false
 })
 </script>
