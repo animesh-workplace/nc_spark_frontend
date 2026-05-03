@@ -76,7 +76,7 @@ const score_label = {
 
 const FetchData = async () => {
 	try {
-		const response = await DistributionAPI('8cf25054-5824-45d4-9072-b3343732a7a5')
+		const response = await DistributionAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d')
 		histogramData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
