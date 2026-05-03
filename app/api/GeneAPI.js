@@ -57,6 +57,26 @@ export function useGeneAPI() {
 		}
 	}
 
+	const GroupDistributionAPI = async (payload, rank_by) => {
+		try {
+			const { data, error } = await useFetch(
+				`${BASEURL}/${payload}/group-distributions?rank_by=${rank_by}`,
+				{
+					method: 'GET',
+				},
+			)
+
+			if (error.value) {
+				throw new Error(error.value || 'An error occurred')
+			}
+
+			return data.value
+		} catch (err) {
+			console.error(err)
+			throw err
+		}
+	}
+
 	const ReplicationAPI = async payload => {
 		try {
 			const { data, error } = await useFetch(`${BASEURL}/${payload}/replication`, {
@@ -169,6 +189,7 @@ export function useGeneAPI() {
 		ReplicationAPI,
 		DistributionAPI,
 		TrinucleotideAPI,
+		GroupDistributionAPI,
 		VariantsPerChromosomeAPI,
 	}
 }
