@@ -3,27 +3,7 @@
 	<div class="w-full">
 		<Skeleton height="20rem" v-if="isLoading" />
 		<template v-else>
-			<div class="grid grid-cols-2 gap-2">
-				<!-- Header stats strip -->
-				<div class="grid grid-cols-2 gap-2 mb-3">
-					<div
-						v-for="stat in headerStats"
-						:key="stat.label"
-						class="flex flex-col rounded-lg px-3 py-2  items-center justify-center"
-						:class="stat.label == 'Ti/Tv Ratio' ? 'col-span-2' : ''"
-						:style="{ backgroundColor: stat.color + '20' }"
-					>
-						<p class="text-xs font-semibold uppercase tracking-wider" :style="{ color: stat.color }">
-							{{ stat.label }}
-						</p>
-						<p class="text-lg font-bold text-gray-700 font-sans">
-							{{ stat.value.toLocaleString() }}
-						</p>
-					</div>
-				</div>
-
-				<VChart :option="chartOption" class="chart" autoresize />
-			</div>
+			<VChart :option="chartOption" class="chart" autoresize />
 		</template>
 	</div>
 </template>
@@ -123,15 +103,15 @@ const updateChart = () => {
 					scaleSize: 8,
 					itemStyle: { shadowBlur: 12, shadowColor: 'rgba(0,0,0,0.15)' },
 				},
-				// label: {
-				// 	show: true,
-				// 	position: 'inside',
-				// 	formatter: p => `${((p.value / total) * 100).toFixed(1)}%`,
-				// 	fontSize: 13,
-				// 	fontWeight: 700,
-				// 	fontFamily: 'Lexend Deca',
-				// 	color: '#fff',
-				// },
+				label: {
+					show: true,
+					position: 'inside',
+					formatter: p => `${((p.value / total) * 100).toFixed(1)}%`,
+					fontSize: 11,
+					fontWeight: 500,
+					fontFamily: 'Lexend Deca',
+					color: '#fff',
+				},
 				labelLine: { show: false },
 			},
 		],
