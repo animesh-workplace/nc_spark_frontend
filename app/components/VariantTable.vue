@@ -45,7 +45,7 @@
 			:value="localResults"
 			:totalRecords="data.total_results"
 			:rowsPerPageOptions="[20, 50, 100, 200, 500]"
-			class="min-w-[900px] rounded-2xl overflow-hidden border border-[#E0E6E8] bg-white/80 backdrop-blur-sm transition-opacity duration-500"
+			class="min-w-[900px] rounded-2xl overflow-hidden border border-[#E0E6E8] bg-white/80 backdrop-blur-sm transition-opacity duration-500 shadow-sm"
 		>
 			<Column
 				sortable
