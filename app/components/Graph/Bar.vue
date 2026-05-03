@@ -16,6 +16,7 @@ const props = defineProps({
 			data: [Array.from({ length: 7 }, () => Number(Math.random().toFixed(4)))],
 		}),
 	},
+	color: { type: String, default: '#264653' },
 	showAll: { type: Boolean, default: false },
 	horizontal: { type: Boolean, default: false },
 })
@@ -97,7 +98,7 @@ const updateChart = () => {
 				value,
 				name: categories[i],
 				itemStyle: {
-					color: '#1F6F78',
+					color: props.color,
 					borderRadius: isTop ? roundedRadii : 0,
 				},
 			}
