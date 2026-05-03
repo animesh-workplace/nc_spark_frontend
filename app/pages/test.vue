@@ -23,107 +23,10 @@
 			<DashboardZoneA class="mb-20" />
 			<DashboardZoneB class="mb-20" />
 			<DashboardZoneC class="mb-20" />
-
-			<!-- <DashboardDistribution2 class="mb-10" />
-			<DashboardDistribution class="mb-10" />
-			<ReplicationRadarChart :plotData="replicationData" />
-			<div class="my-5" v-if="tableData?.results?.length || false">
-				<VariantTable
-					:data="tableData"
-					:loading="isLoading"
-					@sort="handleTableSort"
-					@page="handleTablePage"
-				/>
-			</div>
-
-			<div class="my-5">
-				<TopVariantTable
-					:results="topVariantsData.results"
-					:cross-group-hits="topVariantsData.cross_group_hits"
-				/>
-			</div> -->
 		</section>
 	</main>
 </template>
 
-<script setup>
-import { useGeneAPI } from '@/api/GeneAPI'
-const { FilterAPI, TopVariantsAPI, ReplicationAPI } = useGeneAPI()
-
-const currentPage = ref(1)
-const isLoading = ref(true)
-const tableData = ref({ results: [], total_results: 0 })
-const topVariantsData = ref({ results: {}, cross_group_hits: [] })
-const replicationData = ref({ stats: [], indicator: [], series_data: [] })
-
-const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
-	isLoading.value = true
-	try {
-		const response = await FilterAPI({
-			page,
-			page_size,
-			sort_order: 'asc',
-			session_id: '01e96769-69c1-40d4-aecf-3c6cae17eb9d',
-			...sortParams,
-		})
-		tableData.value = response
-	} catch (error) {
-		console.error('Error fetching data:', error)
-	} finally {
-		isLoading.value = false
-	}
-}
-
-const FetchData2 = async () => {
-	try {
-		const response = await TopVariantsAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d', {
-			limit: 10,
-			rank_by: 'median',
-		})
-		topVariantsData.value = response
-	} catch (error) {
-		console.error('Error fetching data:', error)
-	} finally {
-		isLoading.value = false
-	}
-}
-
-const FetchData3 = async () => {
-	try {
-		const response = await ReplicationAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d')
-		replicationData.value = response
-	} catch (error) {
-		console.error('Error fetching data:', error)
-	} finally {
-		isLoading.value = false
-	}
-}
-
-const handleTableSort = event => {
-	// Optional: refetch with server-side sort instead of relying on client sort
-	// FetchData(currentPage.value, pageSize.value, { sort_field: event.sortField, sort_order: event.sortOrder })
-}
-
-const handleTablePage = event => {
-	currentPage.value = event.page + 1 // PrimeVue is 0-indexed
-	pageSize.value = event.rows
-	FetchData(currentPage.value, pageSize.value)
-}
-
-onMounted(() => {
-	nextTick(async () => {
-		await FetchData()
-		await FetchData2()
-		await FetchData3()
-	})
-})
-
-function handleMove(e) {
-	const el = e.currentTarget
-	const rect = el.getBoundingClientRect()
-	el.style.setProperty('--mx', `${((e.clientX - rect.left) / rect.width) * 100}%`)
-	el.style.setProperty('--my', `${((e.clientY - rect.top) / rect.height) * 100}%`)
-}
-</script>
+<script setup></script>
 
 <style scoped></style>
