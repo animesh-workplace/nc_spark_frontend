@@ -32,7 +32,7 @@
 						size="small"
 						stripedRows
 						showGridlines
-						class="group-table"
+						class="group-table shadow-sm rounded-2xl overflow-hidden border border-[#E0E6E8] bg-white/80 backdrop-blur-sm transition-opacity duration-500"
 					>
 						<!-- Rank Column -->
 						<Column header="#" style="width: 3rem; text-align: center">
@@ -42,7 +42,12 @@
 						</Column>
 
 						<!-- Variant Column -->
-						<Column field="variant" header="Variant" style="min-width: 200px">
+						<Column
+							field="variant"
+							header="Variant"
+							style="min-width: 200px"
+							:pt="{ columnHeaderContent: '!p-2' }"
+						>
 							<template #body="{ data }">
 								<div class="flex items-center gap-2">
 									<span class="text-sm font-mono">{{ data.variant }}</span>
@@ -59,7 +64,12 @@
 						</Column>
 
 						<!-- Score Column -->
-						<Column field="group_score" header="Score" style="width: 120px; text-align: right">
+						<Column
+							field="group_score"
+							header="Score"
+							style="width: 120px; text-align: right"
+							:pt="{ columnHeaderContent: '!p-2' }"
+						>
 							<template #body="{ data }">
 								<div class="flex align-center gap-2 justify-content-end">
 									<ProgressBar :value="data.group_score" />
@@ -71,7 +81,7 @@
 						</Column>
 
 						<!-- Nearest Gene Column -->
-						<Column header="Nearest Gene">
+						<Column header="Nearest Gene" :pt="{ columnHeaderContent: '!p-2' }">
 							<template #body="{ data }">
 								<GeneAnnotationCell
 									:gene-if-overlapping="data.gene_if_overlapping"
@@ -101,15 +111,21 @@
 				:rowClass="row => (row.group_count >= 3 ? 'cross-hit-row-high' : 'cross-hit-row-low')"
 				size="small"
 				showGridlines
+				class="shadow-sm rounded-2xl overflow-hidden border border-[#E0E6E8] bg-white/80 backdrop-blur-sm transition-opacity duration-500"
 			>
-				<Column field="variant" header="Variant" style="min-width: 220px">
+				<Column
+					field="variant"
+					header="Variant"
+					style="min-width: 220px"
+					:pt="{ columnHeaderContent: '!p-2' }"
+				>
 					<template #body="{ data }">
 						<span class="text-sm font-mono">{{ data.variant }}</span>
 					</template>
 				</Column>
 
 				<!-- Nearest Gene Column in cross-group table -->
-				<Column header="Nearest Gene">
+				<Column header="Nearest Gene" :pt="{ columnHeaderContent: '!p-2' }">
 					<template #body="{ data }">
 						<GeneAnnotationCell
 							:gene-if-overlapping="data.gene_if_overlapping"
