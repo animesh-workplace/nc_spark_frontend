@@ -40,8 +40,10 @@ const headerStats = computed(() => [
 ])
 
 const updateChart = () => {
-	const { categories, data, mode } = props.plotData
-	const counts = data[0] // flat array of values matching categories
+	const { categories, data, mode, titv_ratio } = props.plotData
+	const counts = data[0]
+	const total = counts.reduce((a, b) => a + b, 0)
+	const isFrequency = mode === 'frequency'
 
 	const pieData = categories.map((cat, i) => ({
 		name: cat,
@@ -50,12 +52,10 @@ const updateChart = () => {
 			color: COLORS[cat] ?? '#94a3b8',
 			borderRadius: 6,
 			borderWidth: 2,
-			// borderColor: '#fff',
 		},
 	}))
 
-	const total = counts.reduce((a, b) => a + b, 0)
-	const unit = mode === 'fraction' ? '' : ''
+	const ratioDisplay = titv_ratio != null ? Number(titv_ratio).toFixed(2) : 'N/A'
 
 	chartOption.value = {
 		backgroundColor: 'transparent',
@@ -76,7 +76,7 @@ const updateChart = () => {
                             margin-right:6px;vertical-align:middle
                         "></span>
                         <b>${params.name}</b><br/>
-                        <span style="color:#64748b">Count</span>: <b>${params.value.toLocaleString()}${unit}</b><br/>
+                        <span style="color:#64748b">Count</span>: <b>${params.value.toLocaleString()}</b><br/>
                         <span style="color:#64748b">Share</span>: <b>${pct}%</b>
                     </div>
                 `
@@ -93,26 +93,56 @@ const updateChart = () => {
 		series: [
 			{
 				type: 'pie',
-				radius: ['42%', '70%'], // donut
+				radius: ['60%', '90%'],
 				center: ['50%', '46%'],
 				avoidLabelOverlap: true,
-				padAngle: 3, // gap between slices
+				padAngle: 3,
 				data: pieData,
-				emphasis: {
-					scale: true,
-					scaleSize: 8,
-					itemStyle: { shadowBlur: 12, shadowColor: 'rgba(0,0,0,0.15)' },
-				},
+				// emphasis: {
+				// 	scale: true,
+				// 	scaleSize: 8,
+				// 	itemStyle: { shadowBlur: 12, shadowColor: 'rgba(0,0,0,0.15)' },
+				// },
 				label: {
 					show: true,
 					position: 'inside',
-					formatter: p => `${((p.value / total) * 100).toFixed(1)}%`,
-					fontSize: 11,
+					formatter: p =>
+						isFrequency ? `${((p.value / total) * 100).toFixed(1)}%` : p.value.toLocaleString(),
+					fontSize: 14,
+					color: '#fff',
 					fontWeight: 500,
 					fontFamily: 'Lexend Deca',
-					color: '#fff',
 				},
 				labelLine: { show: false },
+			},
+			{
+				type: 'pie',
+				radius: ['0%', '0%'],
+				center: ['50%', '46%'],
+				silent: true,
+				label: {
+					show: true,
+					position: 'center',
+					formatter: () => `{ratio|${ratioDisplay}}\n{label|Ti/Tv}`,
+					rich: {
+						ratio: {
+							fontSize: 22,
+							lineHeight: 32,
+							fontWeight: 700,
+							color: '#111827',
+							fontFamily: 'Lexend Deca',
+						},
+						label: {
+							fontSize: 11,
+							lineHeight: 18,
+							fontWeight: 400,
+							color: '#6b7280',
+							fontFamily: 'Lexend Deca',
+						},
+					},
+				},
+				labelLine: { show: false },
+				data: [{ value: 1, itemStyle: { color: 'transparent' } }],
 			},
 		],
 	}
