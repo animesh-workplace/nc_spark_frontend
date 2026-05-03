@@ -51,8 +51,7 @@ export default defineNuxtConfig({
 	app: {
 		baseURL: '/nvpp/',
 		head: {
-			title:
-				'Noncoding Variant Prioritization Portal | National Institute of Biomedical Genomics | BRIC-NIBMG',
+			title: 'NC-SPARK | National Institute of Biomedical Genomics | BRIC-NIBMG',
 			meta: [],
 			link: [{ rel: 'icon', href: '/nvpp/favicon.ico' }],
 		},
