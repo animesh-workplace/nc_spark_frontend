@@ -6,16 +6,27 @@
 		<div class="my-5" v-if="tableData?.results?.length || false">
 			<VariantTable :data="tableData" :loading="isLoading" @sort="handleTableSort" @page="handleTablePage" />
 		</div>
+
+		<div class="my-5">
+			<TopVariantTable
+				:results="topVariantsData.results"
+				:cross-group-hits="topVariantsData.cross_group_hits"
+			/>
+		</div>
 	</section>
 </template>
 
 <script setup>
 import { useGeneAPI } from '@/api/GeneAPI'
-const { FilterAPI } = useGeneAPI()
+const { FilterAPI, TopVariantsAPI } = useGeneAPI()
 
 const tableData = ref({ results: [], total_results: 0 })
 const isLoading = ref(true)
 const currentPage = ref(1)
+const topVariantsData = ref({
+	results: {},
+	cross_group_hits: [],
+})
 
 const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 	isLoading.value = true
@@ -28,6 +39,20 @@ const FetchData = async (page = 1, page_size = 20, sortParams = {}) => {
 			...sortParams,
 		})
 		tableData.value = response
+	} catch (error) {
+		console.error('Error fetching data:', error)
+	} finally {
+		isLoading.value = false
+	}
+}
+
+const FetchData2 = async () => {
+	try {
+		const response = await TopVariantsAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d', {
+			limit: 10,
+			rank_by: 'median',
+		})
+		topVariantsData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
 	} finally {
@@ -49,6 +74,7 @@ const handleTablePage = event => {
 onMounted(() => {
 	nextTick(async () => {
 		await FetchData()
+		await FetchData2()
 	})
 })
 </script>
