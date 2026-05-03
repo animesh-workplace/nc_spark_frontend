@@ -1,6 +1,7 @@
 <template>
 	<section class="py-20 min-h-screen bg-stone-200 px-5 md:px-8">
 		<DashboardZoneA class="mb-20" />
+		<DashboardDistribution2 class="mb-10" />
 		<DashboardDistribution class="mb-10" />
 		<div class="my-5" v-if="tableData?.results?.length || false">
 			<VariantTable :data="tableData" :loading="isLoading" @sort="handleTableSort" @page="handleTablePage" />
