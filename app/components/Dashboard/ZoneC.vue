@@ -53,7 +53,7 @@ const topVariantsData = ref({ results: {}, cross_group_hits: [] })
 
 const FetchData = async () => {
 	try {
-		const response = await TopVariantsAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d', {
+		const response = await TopVariantsAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af', {
 			limit: 10,
 			rank_by: statMode.value,
 		})
