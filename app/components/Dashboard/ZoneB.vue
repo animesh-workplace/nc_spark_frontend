@@ -195,7 +195,7 @@ const domain_score_label = {
 
 const FetchData = async () => {
 	try {
-		const response = await DistributionAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d')
+		const response = await DistributionAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af')
 		histogramData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
@@ -206,7 +206,7 @@ const FetchData = async () => {
 
 const FetchData2 = async () => {
 	try {
-		const response = await GroupDistributionAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d', statMode.value)
+		const response = await GroupDistributionAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af', statMode.value)
 		domainData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
@@ -222,7 +222,7 @@ const FetchData3 = async (page = 1, page_size = 20, sortParams = {}) => {
 			page,
 			page_size,
 			sort_order: 'asc',
-			session_id: '01e96769-69c1-40d4-aecf-3c6cae17eb9d',
+			session_id: '7dc153d3-d7bf-41d4-89ea-c8129cb317af',
 			...sortParams,
 		})
 		tableData.value = response
@@ -235,7 +235,7 @@ const FetchData3 = async (page = 1, page_size = 20, sortParams = {}) => {
 
 const FetchData4 = async () => {
 	try {
-		const response = await ReplicationAPI('01e96769-69c1-40d4-aecf-3c6cae17eb9d')
+		const response = await ReplicationAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af')
 		replicationData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
