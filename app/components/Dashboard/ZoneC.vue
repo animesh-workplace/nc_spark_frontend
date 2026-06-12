@@ -41,6 +41,10 @@
 import { useGeneAPI } from '@/api/GeneAPI'
 const { TopVariantsAPI } = useGeneAPI()
 
+const props = defineProps({
+	analysisId: { type: String, required: true },
+})
+
 const isLoading = ref(true)
 const statMode = ref('median')
 const statOptions = [
@@ -53,7 +57,7 @@ const topVariantsData = ref({ results: {}, cross_group_hits: [] })
 
 const FetchData = async () => {
 	try {
-		const response = await TopVariantsAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af', {
+		const response = await TopVariantsAPI(props.analysisId, {
 			limit: 10,
 			rank_by: statMode.value,
 		})
