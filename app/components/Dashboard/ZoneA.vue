@@ -69,6 +69,10 @@
 import { useGeneAPI } from '@/api/GeneAPI'
 const { VariantsPerChromosomeAPI, SNVChangeAPI, TrinucleotideAPI, TiTvAPI } = useGeneAPI()
 
+const props = defineProps({
+	analysisId: { type: String, required: true },
+})
+
 const selectedView = ref('count')
 const viewOptions = ref([
 	{ label: 'Count', value: 'count', icon: 'tabler:antenna-bars-5' },
@@ -83,7 +87,7 @@ const titvData = ref({ categories: [], data: [[]], ti_count: 0, tv_count: 0, tit
 
 const FetchData = async () => {
 	try {
-		const response = await VariantsPerChromosomeAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af', selectedView.value)
+		const response = await VariantsPerChromosomeAPI(props.analysisId, selectedView.value)
 		variantsPerChr.value.categories = response.categories.map(chrom => chrom.replace('chr', ''))
 		variantsPerChr.value.data = response.data
 	} catch (error) {
@@ -95,7 +99,7 @@ const FetchData = async () => {
 
 const FetchData2 = async () => {
 	try {
-		const response = await SNVChangeAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af', selectedView.value)
+		const response = await SNVChangeAPI(props.analysisId, selectedView.value)
 		snvChange.value.categories = response.categories.map(chrom => chrom.replace('chr', ''))
 		snvChange.value.data = response.data
 	} catch (error) {
@@ -107,7 +111,7 @@ const FetchData2 = async () => {
 
 const FetchData3 = async () => {
 	try {
-		const response = await TrinucleotideAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af', selectedView.value)
+		const response = await TrinucleotideAPI(props.analysisId, selectedView.value)
 		trinucleotideData.value = response
 	} catch (error) {
 		console.error('Error fetching trinucleotide data:', error)
@@ -118,7 +122,7 @@ const FetchData3 = async () => {
 
 const FetchData4 = async () => {
 	try {
-		const response = await TiTvAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af', selectedView.value)
+		const response = await TiTvAPI(props.analysisId, selectedView.value)
 		titvData.value = response
 	} catch (error) {
 		console.error('Error fetching Ti/Tv data:', error)
@@ -135,6 +139,7 @@ const updateCharts = async () => {
 }
 
 onMounted(async () => {
+	console.log('Props received in ZoneA:', props.analysisId)
 	await nextTick()
 	await FetchData()
 	await FetchData2()
