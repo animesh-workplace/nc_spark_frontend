@@ -20,13 +20,20 @@
 		</div>
 
 		<section class="mx-auto px-5 md:px-8">
-			<DashboardZoneA class="mb-20" />
-			<DashboardZoneB class="mb-20" />
-			<DashboardZoneC class="mb-20" />
+			<DashboardZoneA class="mb-20" :analysisId="id" />
+			<DashboardZoneB class="mb-20" :analysisId="id" />
+			<DashboardZoneC class="mb-20" :analysisId="id" />
 		</section>
 	</main>
 </template>
 
-<script setup></script>
+<script setup>
+const route = useRoute()
+const id = ref(null)
+
+onBeforeMount(() => {
+	id.value = route.params.id
+})
+</script>
 
 <style scoped></style>
