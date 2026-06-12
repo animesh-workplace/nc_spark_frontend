@@ -133,6 +133,10 @@
 import { useGeneAPI } from '@/api/GeneAPI'
 const { DistributionAPI, GroupDistributionAPI, FilterAPI, ReplicationAPI } = useGeneAPI()
 
+const props = defineProps({
+	analysisId: { type: String, required: true },
+})
+
 const selectedView = ref('line')
 const viewOptions = ref([
 	{ label: 'Line', value: 'line', icon: 'solar:diagram-up-linear' },
@@ -195,7 +199,7 @@ const domain_score_label = {
 
 const FetchData = async () => {
 	try {
-		const response = await DistributionAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af')
+		const response = await DistributionAPI(props.analysisId)
 		histogramData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
@@ -206,7 +210,7 @@ const FetchData = async () => {
 
 const FetchData2 = async () => {
 	try {
-		const response = await GroupDistributionAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af', statMode.value)
+		const response = await GroupDistributionAPI(props.analysisId, statMode.value)
 		domainData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
@@ -222,7 +226,7 @@ const FetchData3 = async (page = 1, page_size = 20, sortParams = {}) => {
 			page,
 			page_size,
 			sort_order: 'asc',
-			session_id: '7dc153d3-d7bf-41d4-89ea-c8129cb317af',
+			session_id: props.analysisId,
 			...sortParams,
 		})
 		tableData.value = response
@@ -235,7 +239,7 @@ const FetchData3 = async (page = 1, page_size = 20, sortParams = {}) => {
 
 const FetchData4 = async () => {
 	try {
-		const response = await ReplicationAPI('7dc153d3-d7bf-41d4-89ea-c8129cb317af')
+		const response = await ReplicationAPI('fe3b07d3-1822-40e4-ad5e-3b3923032485')
 		replicationData.value = response
 	} catch (error) {
 		console.error('Error fetching data:', error)
